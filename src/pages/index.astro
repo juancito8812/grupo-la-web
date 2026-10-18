@@ -3,10 +3,11 @@ import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
-import MediaPlaceholder from '../components/MediaPlaceholder.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import { site, services, process, projects, about, allies, social, faqs, quoteForm, url } from '../config';
+
+const igUrl = (handle: string) => `https://www.instagram.com/${handle.replace('@', '')}/`;
 ---
 
 <Base>
@@ -25,14 +26,17 @@ import { site, services, process, projects, about, allies, social, faqs, quoteFo
     <!-- HERO -->
     <section class="hero">
       <div class="container">
-        <div class="hero-grid">
+        <div class="hero-top">
+          <span>Grupo LA — Caracas, Venezuela</span>
+          <span>Arquitectura · Ingeniería · Diseño interior</span>
+        </div>
+
+        <div class="hero-body">
           <div>
-            <span class="eyebrow">Arquitectura · Ingeniería · Diseño interior</span>
             <h1>Proyectos que se piensan y obras que <em>se entregan</em>.</h1>
             <p class="lead">
               Diseñamos, calculamos, inspeccionamos y ejecutamos obras en casas, apartamentos,
-              oficinas y locales. Arquitectura, ingeniería y diseño interior con un mismo
-              responsable de principio a fin.
+              oficinas y locales. Un mismo responsable del primer plano a la entrega.
             </p>
             <div class="hero-actions">
               <a class="btn btn--primary" href={url('#cotizar')}>
@@ -41,60 +45,70 @@ import { site, services, process, projects, about, allies, social, faqs, quoteFo
               </a>
               <a class="btn btn--ghost" href={url('#proyectos')}>Ver proyectos</a>
             </div>
-            <p class="hero-note">Visita de levantamiento sin costo en {site.contact.serviceArea}.</p>
           </div>
-          <MediaPlaceholder
-            label="Foto de obra principal"
-            sublabel="pendiente de entregar por el cliente"
-            class="hero-ph"
-          />
+
+          <div class="hero-rail">
+            <span class="hero-rail-title">Disciplinas</span>
+            <ul>
+              {services.map((service, i) => (
+                <li>
+                  <span>{String(i + 1).padStart(2, '0')}</span>
+                  {service.title}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        <div class="stats">
-          {site.stats.map((stat) => (
-            <div class="stat">
-              <strong>{stat.value}</strong>
-              <span>{stat.label}</span>
-            </div>
-          ))}
+        <div class="hero-foot">
+          <span>Visita de levantamiento sin costo en {site.contact.serviceArea}</span>
+          <span>
+            Obra en proceso en{' '}
+            <a href={social.instagramHref} target="_blank" rel="noopener">{social.instagramHandle}</a>
+          </span>
         </div>
       </div>
     </section>
 
     <!-- SERVICIOS -->
-    <section class="section" id="servicios">
+    <section class="section" id="servicios" data-reveal>
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Servicios</span>
-          <h2>Todo lo que una obra necesita, en un solo equipo</h2>
+        <div class="section-head section-head--split">
+          <div>
+            <h2>Todo lo que una obra necesita,<br />en un solo equipo</h2>
+          </div>
           <p class="lead">
             Del proyecto a la entrega: diseño, cálculo, inspección y ejecución coordinados por el
             mismo equipo, para que no tengas que conseguir cinco profesionales distintos.
           </p>
         </div>
-        <div class="cards">
-          {services.map((service) => (
-            <article class="card">
-              <div class="icon-badge"><Icon name={service.icon} size={22} /></div>
+
+        <ul class="service-list">
+          {services.map((service, i) => (
+            <li class="service">
+              <span class="service-num">{String(i + 1).padStart(2, '0')}</span>
               <h3>{service.title}</h3>
               <p>{service.desc}</p>
-            </article>
+              <span class="service-icon"><Icon name="arrow" size={18} /></span>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
 
     <!-- PROYECTOS -->
-    <section class="section section--paper2" id="proyectos">
+    <section class="section section--paper2" id="proyectos" data-reveal>
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Proyectos</span>
-          <h2>Antes y después, sin adornos</h2>
+        <div class="section-head section-head--split">
+          <div>
+            <h2>Antes y después,<br />sin adornos</h2>
+          </div>
           <p class="lead">
-            Cada obra se documenta con fotos de antes, durante y después. Los proyectos abajo son
-            reales; las fotos antes/después están pendientes de entrega por el cliente.
+            Cada obra se documenta con fotos de antes, durante y después. Los proyectos son reales;
+            las fotos antes/después están pendientes de entrega por el cliente.
           </p>
         </div>
+
         <div class="projects">
           {projects.map((project) => (
             <ProjectCard
@@ -102,6 +116,7 @@ import { site, services, process, projects, about, allies, social, faqs, quoteFo
               meta={project.meta}
               summary={project.summary}
               tags={project.tags}
+              wide={Boolean(project.featured)}
             />
           ))}
         </div>
@@ -109,12 +124,16 @@ import { site, services, process, projects, about, allies, social, faqs, quoteFo
     </section>
 
     <!-- PROCESO -->
-    <section class="section" id="proceso">
+    <section class="section" id="proceso" data-reveal>
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Proceso</span>
-          <h2>Cuatro pasos, cero sorpresas</h2>
+        <div class="section-head section-head--split">
+          <div><h2>Cuatro pasos, cero sorpresas</h2></div>
+          <p class="lead">
+            El proceso es el mismo para un baño o para una obra completa: medir, presupuestar por
+            partidas, ejecutar con reportes y entregar con checklist.
+          </p>
         </div>
+
         <div class="steps">
           {process.map((item) => (
             <div class="step">
@@ -128,67 +147,76 @@ import { site, services, process, projects, about, allies, social, faqs, quoteFo
     </section>
 
     <!-- NOSOTROS -->
-    <section class="section section--paper2" id="nosotros">
+    <section class="section section--paper2" id="nosotros" data-reveal>
       <div class="container">
         <div class="about-grid">
           <div>
-            <span class="eyebrow">Nosotros</span>
             <h2>{about.title}</h2>
             {about.paragraphs.map((paragraph) => <p class="lead">{paragraph}</p>)}
             <ul class="about-list">
               {about.bullets.map((bullet) => (
                 <li>
-                  <Icon name="check" size={18} />
+                  <Icon name="check" size={17} />
                   <span>{bullet}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <MediaPlaceholder
-            variant="light"
-            label="Equipo en obra"
-            sublabel="foto pendiente de entregar por el cliente"
-          />
+          <figure class="pull">
+            <p>«Un solo árbol no hace montaña.»</p>
+            <footer>Arq. Luz Aché · Fundadora de Grupo LA</footer>
+          </figure>
         </div>
       </div>
     </section>
 
-    <!-- ALIADOS + INSTAGRAM -->
-    <section class="section section--dark">
+    <!-- ALIADOS -->
+    <section class="section section--dark" data-reveal>
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Aliados</span>
-          <h2>La obra se hace en equipo</h2>
+        <div class="section-head section-head--split">
+          <div>
+            <span class="eyebrow">Aliados</span>
+            <h2>La obra se hace en equipo</h2>
+          </div>
           <p class="lead">
             Para mobiliario, mármol, iluminación y climatización trabajamos con talleres de
             confianza que ya conocen nuestra forma de ejecutar.
           </p>
         </div>
+
         <ul class="allies">
           {allies.map((ally) => (
             <li>
-              <strong>{ally.handle}</strong>
-              <span>{ally.role}</span>
+              <a href={igUrl(ally.handle)} target="_blank" rel="noopener">
+                <strong>{ally.handle}</strong>
+                <span>{ally.role}</span>
+                <Icon name="arrow" size={16} />
+              </a>
             </li>
           ))}
         </ul>
-        <div class="hero-actions" style="margin-top:44px">
+
+        <div class="ally-cta">
           <a class="btn btn--primary" href={social.instagramHref} target="_blank" rel="noopener">
             <Icon name="instagram" size={18} />
             {social.label}
           </a>
-          <span class="lead" style="margin:0">{social.instagramHandle} — {social.note}</span>
+          <p class="lead">{social.instagramHandle} — {social.note}</p>
         </div>
       </div>
     </section>
 
     <!-- FAQ -->
-    <section class="section" id="faq">
+    <section class="section" id="faq" data-reveal>
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Preguntas frecuentes</span>
-          <h2>Lo que más preguntan antes de firmar</h2>
+        <div class="section-head section-head--split">
+          <div><h2>Lo que más preguntan<br />antes de firmar</h2></div>
+          <p class="lead">
+            Si tu duda no está aquí, escríbenos por Instagram o deja el formulario: respondemos
+            igual, sin compromiso.
+          </p>
         </div>
+
         <div class="faq">
           {faqs.map((faq) => (
             <details>
@@ -201,7 +229,7 @@ import { site, services, process, projects, about, allies, social, faqs, quoteFo
     </section>
 
     <!-- COTIZAR -->
-    <section class="section section--dark" id="cotizar">
+    <section class="section section--dark" id="cotizar" data-reveal>
       <div class="container">
         <div class="quote-wrap">
           <div class="quote-side">
