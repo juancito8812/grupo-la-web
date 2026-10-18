@@ -1,0 +1,242 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+import MediaPlaceholder from '../components/MediaPlaceholder.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { site, services, process, projects, about, testimonials, faqs, quoteForm, url } from '../config';
+---
+
+<Base>
+  {site.demo && (
+    <div class="demo-bar">
+      <div class="container">
+        <strong>Demo</strong>
+        <span>{site.demoNotice}</span>
+      </div>
+    </div>
+  )}
+
+  <Header />
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <span class="eyebrow">Construcción · Remodelación · Acabados</span>
+            <h1>Obras que se entregan <em>cuando se prometieron</em>.</h1>
+            <p class="lead">
+              Construimos y remodificamos casas, apartamentos, oficinas y locales. Presupuesto
+              cerrado por partidas, un responsable por obra y reportes de avance con fotos.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn--primary" href={url('#cotizar')}>
+                Pedir cotización
+                <Icon name="arrow" size={18} />
+              </a>
+              <a class="btn btn--ghost" href={url('#proyectos')}>Ver proyectos</a>
+            </div>
+            <p class="hero-note">Visita de levantamiento sin costo en {site.contact.serviceArea}.</p>
+          </div>
+          <MediaPlaceholder
+            label="Foto de obra principal"
+            sublabel="pendiente de entregar por el cliente"
+            class="hero-ph"
+          />
+        </div>
+
+        <div class="stats">
+          {site.stats.map((stat) => (
+            <div class="stat">
+              <strong>{stat.value}</strong>
+              <span>{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section class="section" id="servicios">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Servicios</span>
+          <h2>Todo lo que una obra necesita, en un solo equipo</h2>
+          <p class="lead">
+            Coordinamos albañilería, yeso, cerámica, pintura e instalaciones para que no tengas
+            que conseguir cinco contratistas distintos.
+          </p>
+        </div>
+        <div class="cards">
+          {services.map((service) => (
+            <article class="card">
+              <div class="icon-badge"><Icon name={service.icon} size={22} /></div>
+              <h3>{service.title}</h3>
+              <p>{service.desc}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROYECTOS -->
+    <section class="section section--paper2" id="proyectos">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Proyectos</span>
+          <h2>Antes y después, sin adornos</h2>
+          <p class="lead">
+            Cada obra se documenta con fotos de antes, durante y después. Estas fichas son de
+            demostración: se reemplazan con los proyectos reales de Grupo LA.
+          </p>
+        </div>
+        <div class="projects">
+          {projects.map((project) => (
+            <ProjectCard
+              title={project.title}
+              meta={project.meta}
+              summary={project.summary}
+              tags={project.tags}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESO -->
+    <section class="section" id="proceso">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Proceso</span>
+          <h2>Cuatro pasos, cero sorpresas</h2>
+        </div>
+        <div class="steps">
+          {process.map((item) => (
+            <div class="step">
+              <span class="step-num">{item.step}</span>
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- NOSOTROS -->
+    <section class="section section--paper2" id="nosotros">
+      <div class="container">
+        <div class="about-grid">
+          <div>
+            <span class="eyebrow">Nosotros</span>
+            <h2>{about.title}</h2>
+            {about.paragraphs.map((paragraph) => <p class="lead">{paragraph}</p>)}
+            <ul class="about-list">
+              {about.bullets.map((bullet) => (
+                <li>
+                  <Icon name="check" size={18} />
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <MediaPlaceholder
+            variant="light"
+            label="Equipo en obra"
+            sublabel="foto pendiente de entregar por el cliente"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section class="section section--dark">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Clientes</span>
+          <h2>Lo que dicen de la obra</h2>
+          <p class="lead">Los testimonios se publican solo con autorización del cliente.</p>
+        </div>
+        <div class="quotes">
+          {testimonials.map((item) => (
+            <blockquote class="quote">
+              <p>“{item.quote}”</p>
+              <footer>
+                <strong>{item.author}</strong>
+                {item.role}
+              </footer>
+            </blockquote>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Preguntas frecuentes</span>
+          <h2>Lo que más preguntan antes de firmar</h2>
+        </div>
+        <div class="faq">
+          {faqs.map((faq) => (
+            <details>
+              <summary>{faq.q}</summary>
+              <p>{faq.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- COTIZAR -->
+    <section class="section section--dark" id="cotizar">
+      <div class="container">
+        <div class="quote-wrap">
+          <div class="quote-side">
+            <span class="eyebrow">Cotización</span>
+            <h2>{quoteForm.title}</h2>
+            <p class="lead">{quoteForm.subtitle}</p>
+            <ul class="contact-list">
+              <li>
+                <span>Teléfono</span>
+                {site.contact.phoneHref
+                  ? <a href={site.contact.phoneHref}>{site.contact.phone}</a>
+                  : <span class="placeholder">{site.contact.phone}</span>}
+              </li>
+              <li>
+                <span>WhatsApp</span>
+                {site.contact.whatsappHref
+                  ? <a href={site.contact.whatsappHref}>{site.contact.whatsappNumber}</a>
+                  : <span class="placeholder">{site.contact.whatsappNumber}</span>}
+              </li>
+              <li>
+                <span>Correo</span>
+                {site.contact.emailHref
+                  ? <a href={site.contact.emailHref}>{site.contact.email}</a>
+                  : <span class="placeholder">{site.contact.email}</span>}
+              </li>
+              <li>
+                <span>Oficina</span>
+                <span class="placeholder">{site.contact.address}</span>
+              </li>
+            </ul>
+          </div>
+          <QuoteForm />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  {site.contact.whatsappHref && (
+    <a class="wa-float" href={site.contact.whatsappHref} aria-label="Escribir por WhatsApp">
+      <Icon name="whatsapp" size={20} />
+      <span>WhatsApp</span>
+    </a>
+  )}
+</Base>
