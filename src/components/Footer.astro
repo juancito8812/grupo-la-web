@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
-import { site, nav, url } from '../config';
+import Icon from './Icon.astro';
+import { site, nav, social, url } from '../config';
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
@@ -41,6 +42,11 @@ const year = new Date().getFullYear();
           </li>
           <li>{site.contact.address}</li>
           <li>{site.contact.hours}</li>
+          <li>
+            <a href={social.instagramHref} target="_blank" rel="noopener">
+              <Icon name="instagram" size={16} /> {social.instagramHandle}
+            </a>
+          </li>
         </ul>
       </div>
     </div>
