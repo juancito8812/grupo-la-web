@@ -1,0 +1,87 @@
+---
+import { quoteForm, site } from '../config';
+const f = quoteForm.fields;
+const fallbackMsg = site.contact.whatsappHref
+  ? 'El formulario aún no está conectado al buzón de Grupo LA. Escríbenos por WhatsApp mientras lo terminamos.'
+  : 'El formulario aún no está conectado al buzón de Grupo LA. Estamos terminando de configurarlo.';
+---
+<form id="quote-form" novalidate data-endpoint={site.quoteEndpoint} data-fallback={fallbackMsg}>
+  <div class="field-row">
+    <div class="field">
+      <label for="q-name">{f.name}</label>
+      <input id="q-name" name="name" type="text" required autocomplete="name" />
+    </div>
+    <div class="field">
+      <label for="q-phone">{f.phone}</label>
+      <input id="q-phone" name="phone" type="tel" required autocomplete="tel" />
+    </div>
+  </div>
+  <div class="field-row">
+    <div class="field">
+      <label for="q-email">{f.email}</label>
+      <input id="q-email" name="email" type="email" autocomplete="email" />
+    </div>
+    <div class="field">
+      <label for="q-type">{f.type}</label>
+      <select id="q-type" name="type" required>
+        {quoteForm.workTypes.map((t) => <option value={t}>{t}</option>)}
+      </select>
+    </div>
+  </div>
+  <div class="field">
+    <label for="q-location">{f.location}</label>
+    <input id="q-location" name="location" type="text" placeholder="Ej. Chacao, Caracas" />
+  </div>
+  <div class="field">
+    <label for="q-message">{f.message}</label>
+    <textarea id="q-message" name="message" placeholder="Metros aproximados, qué quieres cambiar y para cuándo lo necesitas."></textarea>
+  </div>
+  <button class="btn btn--primary" type="submit">{quoteForm.submit}</button>
+  <p class="form-note">Al enviar aceptas que te contactemos por teléfono o WhatsApp para coordinar la visita.</p>
+  <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  const form = document.getElementById('quote-form') as HTMLFormElement | null;
+  const msg = document.getElementById('form-msg');
+
+  const show = (text: string, ok: boolean) => {
+    if (!msg) return;
+    msg.textContent = text;
+    msg.className = `form-msg is-visible ${ok ? 'form-msg--ok' : 'form-msg--err'}`;
+  };
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const endpoint = form.dataset.endpoint || '';
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    if (!data.name || !data.phone) {
+      show('Faltan tu nombre y un teléfono de contacto.', false);
+      return;
+    }
+
+    if (!endpoint) {
+      show(form.dataset.fallback || 'El formulario aún no está conectado.', false);
+      return;
+    }
+
+    const button = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+    if (button) button.disabled = true;
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      form.reset();
+      show('Recibido. Te contactamos dentro de un día hábil.', true);
+    } catch {
+      show('No pudimos enviar la solicitud. Intenta de nuevo o escríbenos por WhatsApp.', false);
+    } finally {
+      if (button) button.disabled = false;
+    }
+  });
+</script>

@@ -1,0 +1,20 @@
+---
+interface Props {
+  label?: string;
+  sublabel?: string;
+  variant?: 'dark' | 'light';
+  class?: string;
+}
+const {
+  label = 'Imagen pendiente',
+  sublabel = '',
+  variant = 'dark',
+  class: klass = '',
+} = Astro.props;
+---
+<div class:list={['media-ph', variant === 'light' && 'media-ph--light', klass]}>
+  <div>
+    <b>{label}</b>
+    {sublabel && <span>{sublabel}</span>}
+  </div>
+</div>

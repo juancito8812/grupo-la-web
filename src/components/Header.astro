@@ -1,0 +1,19 @@
+---
+import Logo from './Logo.astro';
+import { site, nav, url } from '../config';
+---
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href={url('')} aria-label={`${site.name} — inicio`}>
+      <Logo size={38} />
+      <span>
+        {site.name}
+        <small>{site.tagline}</small>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Navegación principal">
+      {nav.map((item) => <a href={url(item.href)}>{item.label}</a>)}
+    </nav>
+    <a class="btn btn--primary header-cta" href={url('#cotizar')}>Cotizar</a>
+  </div>
+</header>

@@ -1,0 +1,25 @@
+---
+import MediaPlaceholder from './MediaPlaceholder.astro';
+
+interface Props {
+  title: string;
+  meta: string;
+  summary: string;
+  tags: string[];
+}
+const { title, meta, summary, tags } = Astro.props;
+---
+<article class="project">
+  <div class="project-media">
+    <MediaPlaceholder variant="light" label="Antes" sublabel="foto pendiente" />
+    <MediaPlaceholder variant="light" label="Después" sublabel="foto pendiente" />
+  </div>
+  <div class="project-body">
+    <span class="project-meta">{meta}</span>
+    <h3>{title}</h3>
+    <p>{summary}</p>
+    <div class="tags">
+      {tags.map((tag) => <span class="tag">{tag}</span>)}
+    </div>
+  </div>
+</article>

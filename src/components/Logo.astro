@@ -1,0 +1,22 @@
+---
+interface Props {
+  size?: number;
+  class?: string;
+}
+const { size = 38, class: klass = '' } = Astro.props;
+---
+<svg
+  class={klass}
+  width={size}
+  height={size}
+  viewBox="0 0 48 48"
+  role="img"
+  aria-label="Grupo LA"
+  fill="none"
+>
+  <rect width="48" height="48" rx="11" fill="#0b0e12" />
+  <rect x="1" y="1" width="46" height="46" rx="10" stroke="rgba(255,255,255,0.14)" />
+  <path d="M13 11.5v24.8h9.2" stroke="#f0a92b" stroke-width="3.6" stroke-linecap="square" />
+  <path d="M25.2 36.3 32.6 11.7l7.4 24.6" stroke="#f7f5f1" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M28.6 27.4h8" stroke="#f7f5f1" stroke-width="2.6" stroke-linecap="round" />
+</svg>
