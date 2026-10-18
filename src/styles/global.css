@@ -328,6 +328,26 @@ img, svg { display: block; max-width: 100%; }
 .quote footer { font-size: 0.84rem; color: var(--muted-dark); }
 .quote footer strong { display: block; color: #fff; font-size: 0.92rem; }
 
+/* ---------- Aliados ---------- */
+.allies {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.allies li {
+  border: 1px solid var(--line-dark);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.allies strong { display: block; color: #fff; font-size: 0.95rem; }
+.allies span { color: var(--muted-dark); font-size: 0.84rem; }
+@media (max-width: 860px) { .allies { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .allies { grid-template-columns: 1fr; } }
+
 /* ---------- FAQ ---------- */
 .faq { display: grid; gap: 12px; max-width: 860px; }
 .faq details {

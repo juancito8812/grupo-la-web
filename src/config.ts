@@ -1,8 +1,11 @@
 /**
  * FUENTE ÚNICA DE CONTENIDO — Grupo LA
  * Todos los textos, datos de contacto y proyectos viven aquí.
- * Los valores marcados como PLACEHOLDER están sin confirmar por el cliente
- * y la UI los muestra como contenido de demostración.
+ * Los valores marcados como pendientes están sin confirmar por el cliente
+ * y la UI los muestra como avisos de "pendiente" en lugar de inventar datos.
+ *
+ * Identidad: Grupo LA — marca de la Arq. Luz Aché (@larquitecto_),
+ * arquitectura · ingeniería · diseño interior · ejecución de obra.
  */
 
 const rawBase = import.meta.env.BASE_URL || '/';
@@ -22,6 +25,10 @@ const EMAIL = ''; // ej. 'contacto@grupola.com'
 const ADDRESS = ''; // ej. 'Av. ... , Caracas'
 const SERVICE_AREA = 'Caracas y Gran Caracas (a confirmar)';
 
+/** Instagram de la marca — dato confirmado, se publica tal cual. */
+const INSTAGRAM = 'https://www.instagram.com/larquitecto_/';
+const INSTAGRAM_HANDLE = '@larquitecto_';
+
 const digits = (value: string): string => value.replace(/[^\d]/g, '');
 const whatsappHref = WHATSAPP
   ? `https://wa.me/${digits(WHATSAPP)}?text=${encodeURIComponent(
@@ -31,12 +38,12 @@ const whatsappHref = WHATSAPP
 
 export const site = {
   name: 'Grupo LA',
-  tagline: 'Construcción y remodelaciones',
+  tagline: 'Arquitectura · Ingeniería · Diseño interior',
   description:
-    'Grupo LA construye y remodifica espacios residenciales y comerciales: obra nueva, ampliaciones, cocinas, baños y locales. Presupuesto claro, plazos cumplidos y acabados que duran.',
+    'Grupo LA, con la Arq. Luz Aché a la cabeza, diseña, calcula, inspecciona y ejecuta obras residenciales y comerciales: arquitectura, ingeniería, diseño interior y remodelaciones con presupuesto por partidas.',
   demo: true,
   demoNotice:
-    'Contenido de demostración: los datos de contacto, proyectos y testimonios son provisionales hasta que el cliente los entregue.',
+    'Contenido de demostración: los datos de contacto y las fotos son provisionales hasta que el cliente los entregue.',
   contact: {
     phone: PHONE || 'Teléfono pendiente por confirmar',
     phoneHref: PHONE ? `tel:+${digits(PHONE)}` : '',
@@ -58,6 +65,24 @@ export const site = {
   ],
 };
 
+/** Redes y prueba social — solo datos verificados del perfil. */
+export const social = {
+  instagramHref: INSTAGRAM,
+  instagramHandle: INSTAGRAM_HANDLE,
+  label: 'Síguenos en Instagram',
+  note: 'Obra en proceso, acabados y detalles: el día a día se publica en Instagram.',
+};
+
+/** Aliados con los que Grupo LA ejecuta los proyectos (mencionados en obra). */
+export const allies = [
+  { handle: '@tumobili', role: 'Mobiliario a medida' },
+  { handle: '@marmoleriaroraimastone', role: 'Mármoles y topes' },
+  { handle: '@luzmax.ve', role: 'Iluminación' },
+  { handle: '@sillaplace', role: 'Sillas y equipamiento' },
+  { handle: '@innovarccs', role: 'Climatización' },
+  { handle: '@quality_metal', role: 'Herrería y metal' },
+];
+
 export const nav = [
   { label: 'Servicios', href: '#servicios' },
   { label: 'Proyectos', href: '#proyectos' },
@@ -68,34 +93,34 @@ export const nav = [
 
 export const services = [
   {
-    title: 'Obra nueva y ampliaciones',
-    desc: 'Construcción desde los planos hasta la entrega: fundaciones, estructura, techos y acabados.',
+    title: 'Arquitectura y proyectos',
+    desc: 'Diseño del espacio, planos, implantación y visualización antes de mover un bloque. El proyecto guía la obra, no al revés.',
+    icon: 'compass',
+  },
+  {
+    title: 'Ingeniería y cálculo',
+    desc: 'Estructuras, instalaciones eléctricas y sanitarias calculadas y documentadas. Coordinamos ingeniería aliada cuando el alcance lo exige.',
+    icon: 'ruler',
+  },
+  {
+    title: 'Diseño interior',
+    desc: 'Materiales, iluminación, mobiliario y detalles a medida. Espacios pensados para quien los va a habitar, no para la foto.',
+    icon: 'swatch',
+  },
+  {
+    title: 'Construcción y remodelación',
+    desc: 'Ejecución de obra nueva, ampliaciones y remodelaciones: albañilería, drywall, encamisado, cerámica, acabados y pintura.',
     icon: 'building',
   },
   {
-    title: 'Remodelación de interiores',
-    desc: 'Reorganización de espacios, tabiquería, yeso, cerámicas, iluminación y pintura.',
-    icon: 'layout',
+    title: 'Inspección y gerencia de obra',
+    desc: 'Supervisión técnica, control de avance, revisión de lo evidente y acompañamiento cuando el cliente ya tiene contratista.',
+    icon: 'hardhat',
   },
   {
-    title: 'Cocinas y baños',
-    desc: 'Impermeabilización, grifería, mobiliario a medida y cambios de instalaciones.',
-    icon: 'drop',
-  },
-  {
-    title: 'Fachadas y exteriores',
-    desc: 'Frisos, revestimientos, pintura exterior, jardines y zonas sociales.',
-    icon: 'facade',
-  },
-  {
-    title: 'Instalaciones técnicas',
-    desc: 'Electricidad, plomería, gas y aguas servidas con planos actualizados.',
-    icon: 'bolt',
-  },
-  {
-    title: 'Locales comerciales',
-    desc: 'Adecuación de locales, oficinas y fondos de comercio con criterio operativo.',
-    icon: 'store',
+    title: 'Asesorías y acompañamiento',
+    desc: 'Consultoría puntual antes de comprar, remodelar o alquilar: qué se puede hacer, cuánto cuesta y en qué orden conviene hacerlo.',
+    icon: 'chat',
   },
 ];
 
@@ -107,13 +132,13 @@ export const process = [
   },
   {
     step: '02',
-    title: 'Presupuesto detallado',
-    desc: 'Partidas, materiales, tiempos y forma de pago por escrito. Sin extras sorpresa.',
+    title: 'Proyecto y presupuesto',
+    desc: 'Diseño cuando aplica y presupuesto detallado por partidas: materiales, mano de obra y tiempos por escrito.',
   },
   {
     step: '03',
     title: 'Ejecución con reportes',
-    desc: 'Un responsable por obra, avance semanal con fotos y control de materiales.',
+    desc: 'Un responsable por obra, avance documentado con fotos y control de materiales.',
   },
   {
     step: '04',
@@ -122,84 +147,69 @@ export const process = [
   },
 ];
 
+/* Proyectos reales mencionados en el perfil de Instagram (@larquitecto_).
+ * Las fotos antes/después siguen pendientes por entregar: el componente las
+ * muestra como marcador de posición. */
 export const projects = [
   {
-    title: 'Apartamento familiar',
-    meta: 'Remodelación integral · m² por confirmar',
-    summary: 'Cocina cerrada convertida en espacio abierto con isla, más dos baños renovados.',
-    tags: ['Cocina', 'Baños', 'Pintura'],
+    title: 'Proyecto 42',
+    meta: 'Rediseño integral · aliados: mobiliario, mármol, iluminación',
+    summary:
+      'Empezó como un cambio puntual y terminó en rediseño completo: acabados, mobiliario a medida e iluminación trabajados con aliados de obra.',
+    tags: ['Diseño interior', 'Remodelación', 'Mobiliario'],
+    featured: true,
   },
   {
-    title: 'Casa de dos niveles',
-    meta: 'Ampliación · m² por confirmar',
-    summary: 'Segundo nivel con habitación principal, walking closet y terraza posterior.',
-    tags: ['Ampliación', 'Estructura'],
+    title: 'Boca Café',
+    meta: 'Local comercial · reconocido en The South America’s 100 Best Coffee Shops 2026',
+    summary:
+      'Ejecución de un local de café: producción, barra y atención al público. El proyecto creció hasta quedar entre los 100 mejores cafés de Sudamérica.',
+    tags: ['Comercial', 'Ejecución de obra'],
+    featured: true,
   },
   {
-    title: 'Local comercial',
-    meta: 'Adecuación · m² por confirmar',
-    summary: 'Local vacío transformado en tienda con vitrina, depósito y baño para público.',
-    tags: ['Comercial', 'Electricidad'],
+    title: 'Baño con pieza de diseño propio',
+    meta: 'Remodelación · lavamanos de diseño propio',
+    summary:
+      'Piso en madera de deck y lavamanos diseñado para el espacio: acabado que resiste humedad sin repetir el porcelanato de todas las paredes.',
+    tags: ['Baño', 'Diseño de pieza', 'Acabados'],
   },
   {
-    title: 'Oficina corporativa',
-    meta: 'Remodelación · m² por confirmar',
-    summary: 'Nueve puestos de trabajo, sala de reuniones insonorizada y recepción.',
-    tags: ['Oficina', 'Climatización'],
-  },
-  {
-    title: 'Fachada y jardín',
-    meta: 'Exteriores · m² por confirmar',
-    summary: 'Friso nuevo, pintura exterior, pérgola y reordenamiento del jardín.',
-    tags: ['Fachada', 'Exteriores'],
-  },
-  {
-    title: 'Baño principal',
-    meta: 'Remodelación · m² por confirmar',
-    summary: 'Impermeabilización, cerámica de gran formato, walk-in shower y mobiliario suspendido.',
-    tags: ['Baño', 'Impermeabilización'],
+    title: 'Encamisado y drywall',
+    meta: 'Obra en ejecución · técnicas de acabado',
+    summary:
+      'Levantamiento de paredes en drywall, encamisado y mastique con lijado fino: la base que decide si el acabado final se ve parejo.',
+    tags: ['Drywall', 'Albañilería'],
   },
 ];
 
 export const about = {
-  title: 'Construimos con criterio, no con improvisación',
+  title: 'Detrás de Grupo LA está la Arq. Luz Aché',
   paragraphs: [
-    'Grupo LA nace para resolver un problema repetido: obras que empiezan con promesas y terminan con sobreprecios. Trabajamos con presupuesto cerrado por partidas, un responsable por obra y reportes de avance con fotos.',
-    'Tenemos equipo propio de albañilería, yeso, cerámica y pintura, y aliados de confianza para instalaciones eléctricas y sanitarias. Eso nos deja controlar la calidad de punta a punta.',
+    'Grupo LA nace cuando un solo árbol no hace montaña: la Arq. Luz Aché (@larquitecto_) pasó de trabajar sola a poner su nombre al frente de un grupo de personas valiosas detrás de cada proyecto y cada obra.',
+    'Trabajamos con presupuesto por partidas, un responsable por obra y documentación fotográfica del avance. Y con algo que no se cotiza: criterio para decirte qué conviene hacer, en qué orden y qué no vale la pena.',
+    'Acompañamos proyectos desde la idea hasta la entrega; también entramos cuando el cliente ya tiene contratista y necesita supervisión, inspección o una segunda opinión técnica.',
   ],
   bullets: [
+    'Arquitectura, ingeniería y diseño interior bajo un mismo techo.',
     'Presupuesto detallado por partidas, por escrito.',
-    'Responsable de obra asignado y reportes semanales.',
+    'Inspección y gerencia de obra aunque no ejecutemos nosotros.',
     'Garantía escrita sobre los trabajos ejecutados.',
   ],
 };
 
-export const testimonials = [
-  {
-    quote: 'Testimonio de ejemplo: pendiente de la versión autorizada por el cliente.',
-    author: 'Cliente por confirmar',
-    role: 'Remodelación de apartamento',
-  },
-  {
-    quote: 'Testimonio de ejemplo: pendiente de la versión autorizada por el cliente.',
-    author: 'Cliente por confirmar',
-    role: 'Adecuación de local',
-  },
-  {
-    quote: 'Testimonio de ejemplo: pendiente de la versión autorizada por el cliente.',
-    author: 'Cliente por confirmar',
-    role: 'Ampliación de vivienda',
-  },
-];
-
 export const faqs = [
+  {
+    q: '¿Trabajan solo con proyectos propios?',
+    a: 'No. Ejecutamos obras con nuestro proyecto o con planos ya existentes, y también aceptamos gerencia, inspección o supervisión de una obra que otro contratista está ejecutando.',
+  },
   {
     q: '¿Cómo se calcula el presupuesto?',
     a: 'Hacemos una visita de levantamiento y entregamos un presupuesto por partidas: materiales, mano de obra y tiempo estimado. Ese documento es la base del contrato.',
   },
   {
-    q: '¿Trabajan con planos existentes o hay que diseñar?',
-    a: 'Trabajamos con los planos del cliente si están actualizados. Si no existen, hacemos el levantamiento y coordinamos el diseño con un profesional aliado.',
+    q: '¿Diseñan el proyecto o lo entrego yo?',
+    a: 'Ambas. Si los planos están actualizados los usamos; si no existen, hacemos el levantamiento y desarrollamos el diseño con nuestra arquitecta y los ingenieros aliados.',
   },
   {
     q: '¿Cuánto tarda una remodelación?',
@@ -208,10 +218,6 @@ export const faqs = [
   {
     q: '¿Cómo se manejan los pagos?',
     a: 'Por avance de partidas, con anticipo para materiales y pagos contra entrega de etapas verificadas. Todo queda en el presupuesto firmado.',
-  },
-  {
-    q: '¿La garantía cubre materiales?',
-    a: 'La garantía cubre la mano de obra ejecutada. Los materiales mantienen la garantía del fabricante y se entregan sus respaldos al cierre de la obra.',
   },
 ];
 
@@ -228,16 +234,18 @@ export const quoteForm = {
     message: 'Detalle del proyecto',
   },
   workTypes: [
-    'Remodelación de interiores',
-    'Obra nueva o ampliación',
-    'Cocina o baño',
-    'Fachada o exteriores',
+    'Proyecto de arquitectura o diseño',
+    'Ingeniería y cálculo estructural',
+    'Diseño interior',
+    'Construcción o ampliación',
+    'Remodelación (cocina, baño, integral)',
+    'Inspección o gerencia de obra',
+    'Asesoría puntual',
     'Local comercial u oficina',
-    'Instalaciones técnicas',
     'Otro',
   ],
   submit: 'Solicitar cotización',
   success: 'Recibido. Te contactamos dentro de un día hábil.',
   error:
-    'El formulario aún no está conectado al buzón de Grupo LA (endpoint pendiente). Escríbenos por WhatsApp mientras lo terminamos.',
+    'El formulario aún no está conectado al buzón de Grupo LA (endpoint pendiente). Escríbenos por Instagram @larquitecto_ mientras lo terminamos.',
 };

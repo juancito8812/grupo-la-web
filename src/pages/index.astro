@@ -6,7 +6,7 @@ import Icon from '../components/Icon.astro';
 import MediaPlaceholder from '../components/MediaPlaceholder.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import QuoteForm from '../components/QuoteForm.astro';
-import { site, services, process, projects, about, testimonials, faqs, quoteForm, url } from '../config';
+import { site, services, process, projects, about, allies, social, faqs, quoteForm, url } from '../config';
 ---
 
 <Base>
@@ -27,11 +27,12 @@ import { site, services, process, projects, about, testimonials, faqs, quoteForm
       <div class="container">
         <div class="hero-grid">
           <div>
-            <span class="eyebrow">Construcción · Remodelación · Acabados</span>
-            <h1>Obras que se entregan <em>cuando se prometieron</em>.</h1>
+            <span class="eyebrow">Arquitectura · Ingeniería · Diseño interior</span>
+            <h1>Proyectos que se piensan y obras que <em>se entregan</em>.</h1>
             <p class="lead">
-              Construimos y remodificamos casas, apartamentos, oficinas y locales. Presupuesto
-              cerrado por partidas, un responsable por obra y reportes de avance con fotos.
+              Diseñamos, calculamos, inspeccionamos y ejecutamos obras en casas, apartamentos,
+              oficinas y locales. Arquitectura, ingeniería y diseño interior con un mismo
+              responsable de principio a fin.
             </p>
             <div class="hero-actions">
               <a class="btn btn--primary" href={url('#cotizar')}>
@@ -67,8 +68,8 @@ import { site, services, process, projects, about, testimonials, faqs, quoteForm
           <span class="eyebrow">Servicios</span>
           <h2>Todo lo que una obra necesita, en un solo equipo</h2>
           <p class="lead">
-            Coordinamos albañilería, yeso, cerámica, pintura e instalaciones para que no tengas
-            que conseguir cinco contratistas distintos.
+            Del proyecto a la entrega: diseño, cálculo, inspección y ejecución coordinados por el
+            mismo equipo, para que no tengas que conseguir cinco profesionales distintos.
           </p>
         </div>
         <div class="cards">
@@ -90,8 +91,8 @@ import { site, services, process, projects, about, testimonials, faqs, quoteForm
           <span class="eyebrow">Proyectos</span>
           <h2>Antes y después, sin adornos</h2>
           <p class="lead">
-            Cada obra se documenta con fotos de antes, durante y después. Estas fichas son de
-            demostración: se reemplazan con los proyectos reales de Grupo LA.
+            Cada obra se documenta con fotos de antes, durante y después. Los proyectos abajo son
+            reales; las fotos antes/después están pendientes de entrega por el cliente.
           </p>
         </div>
         <div class="projects">
@@ -152,24 +153,31 @@ import { site, services, process, projects, about, testimonials, faqs, quoteForm
       </div>
     </section>
 
-    <!-- TESTIMONIOS -->
+    <!-- ALIADOS + INSTAGRAM -->
     <section class="section section--dark">
       <div class="container">
         <div class="section-head">
-          <span class="eyebrow">Clientes</span>
-          <h2>Lo que dicen de la obra</h2>
-          <p class="lead">Los testimonios se publican solo con autorización del cliente.</p>
+          <span class="eyebrow">Aliados</span>
+          <h2>La obra se hace en equipo</h2>
+          <p class="lead">
+            Para mobiliario, mármol, iluminación y climatización trabajamos con talleres de
+            confianza que ya conocen nuestra forma de ejecutar.
+          </p>
         </div>
-        <div class="quotes">
-          {testimonials.map((item) => (
-            <blockquote class="quote">
-              <p>“{item.quote}”</p>
-              <footer>
-                <strong>{item.author}</strong>
-                {item.role}
-              </footer>
-            </blockquote>
+        <ul class="allies">
+          {allies.map((ally) => (
+            <li>
+              <strong>{ally.handle}</strong>
+              <span>{ally.role}</span>
+            </li>
           ))}
+        </ul>
+        <div class="hero-actions" style="margin-top:44px">
+          <a class="btn btn--primary" href={social.instagramHref} target="_blank" rel="noopener">
+            <Icon name="instagram" size={18} />
+            {social.label}
+          </a>
+          <span class="lead" style="margin:0">{social.instagramHandle} — {social.note}</span>
         </div>
       </div>
     </section>
@@ -218,6 +226,12 @@ import { site, services, process, projects, about, testimonials, faqs, quoteForm
                 {site.contact.emailHref
                   ? <a href={site.contact.emailHref}>{site.contact.email}</a>
                   : <span class="placeholder">{site.contact.email}</span>}
+              </li>
+              <li>
+                <span>Instagram</span>
+                <a href={social.instagramHref} target="_blank" rel="noopener">
+                  {social.instagramHandle}
+                </a>
               </li>
               <li>
                 <span>Oficina</span>
