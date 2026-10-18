@@ -51,10 +51,10 @@ export const site = {
   /** Endpoint del webhook de n8n que recibe las solicitudes de cotización. */
   quoteEndpoint: '',
   stats: [
-    { value: 'PLACEHOLDER', label: 'Años de experiencia' },
-    { value: 'PLACEHOLDER', label: 'Obras entregadas' },
-    { value: 'PLACEHOLDER', label: 'm² construidos' },
-    { value: 'PLACEHOLDER', label: 'Equipo propio' },
+    { value: '—', label: 'Años de experiencia' },
+    { value: '—', label: 'Obras entregadas' },
+    { value: '—', label: 'm² construidos' },
+    { value: '—', label: 'Equipo propio' },
   ],
 };
 
@@ -176,18 +176,18 @@ export const about = {
 
 export const testimonials = [
   {
-    quote: 'PLACEHOLDER — testimonio de cliente pendiente de confirmar.',
-    author: 'PLACEHOLDER — Nombre del cliente',
+    quote: 'Testimonio de ejemplo: pendiente de la versión autorizada por el cliente.',
+    author: 'Cliente por confirmar',
     role: 'Remodelación de apartamento',
   },
   {
-    quote: 'PLACEHOLDER — testimonio de cliente pendiente de confirmar.',
-    author: 'PLACEHOLDER — Nombre del cliente',
+    quote: 'Testimonio de ejemplo: pendiente de la versión autorizada por el cliente.',
+    author: 'Cliente por confirmar',
     role: 'Adecuación de local',
   },
   {
-    quote: 'PLACEHOLDER — testimonio de cliente pendiente de confirmar.',
-    author: 'PLACEHOLDER — Nombre del cliente',
+    quote: 'Testimonio de ejemplo: pendiente de la versión autorizada por el cliente.',
+    author: 'Cliente por confirmar',
     role: 'Ampliación de vivienda',
   },
 ];
