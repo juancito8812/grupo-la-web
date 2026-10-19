@@ -9,64 +9,116 @@ import { site, quoteForm, social, url } from '../config';
 <Base title={`Contacto — ${site.name}`} description="Contacto directo con Grupo LA.">
   <Header />
 
-  <main class="section">
-    <div class="container">
-      <p class="eyebrow">Contact</p>
-      <h1 class="h1">Hablemos de tu obra</h1>
-      <p class="lead" style="max-width:56ch;margin-top:var(--s-3)">
-        {quoteForm.subtitle}
-      </p>
+  <main>
+    <section class="page-hero glow">
+      <div class="grid-lines" aria-hidden="true"></div>
+      <div class="container">
+        <p class="eyebrow">Contacto</p>
+        <h1 class="h1" style="margin-top:18px">Hablemos de tu obra</h1>
+        <p class="lead" style="margin-top:20px">{quoteForm.subtitle}</p>
+      </div>
+    </section>
 
-      <div class="contact-grid">
+    <section class="section" style="border-top:0;padding-top:0">
+      <div class="container contact-grid">
         <div>
           <ul class="contact-list">
             <li>
               <span>Teléfono</span>
               {site.contact.phoneHref
                 ? <a href={site.contact.phoneHref}>{site.contact.phone}</a>
-                : <span class="placeholder">{site.contact.phone}</span>}
+                : <span class="ph">{site.contact.phone}</span>}
             </li>
             <li>
               <span>WhatsApp</span>
               {site.contact.whatsappHref
-                ? <a href={site.contact.whatsappHref}>{site.contact.whatsappNumber}</a>
-                : <span class="placeholder">{site.contact.whatsappNumber}</span>}
+                ? <a href={site.contact.whatsappHref} target="_blank" rel="noopener">{site.contact.whatsappNumber}</a>
+                : <span class="ph">{site.contact.whatsappNumber}</span>}
             </li>
             <li>
               <span>Correo</span>
               {site.contact.emailHref
                 ? <a href={site.contact.emailHref}>{site.contact.email}</a>
-                : <span class="placeholder">{site.contact.email}</span>}
+                : <span class="ph">{site.contact.email}</span>}
             </li>
             <li>
               <span>Instagram</span>
               <a href={social.instagramHref} target="_blank" rel="noopener">{social.instagramHandle}</a>
             </li>
+            <li>
+              <span>Horario</span>
+              <span class="ph">{site.contact.hours}</span>
+            </li>
+            <li>
+              <span>Zona</span>
+              <span class="ph">{site.contact.serviceArea}</span>
+            </li>
           </ul>
 
           {site.contact.whatsappHref && (
-            <a class="btn btn--primary" href={site.contact.whatsappHref} style="margin-top:var(--s-5)">
+            <a class="btn btn--primary btn--lg" href={site.contact.whatsappHref} target="_blank" rel="noopener" style="margin-top:26px">
               <Icon name="whatsapp" size={18} /> Escribir por WhatsApp
             </a>
           )}
+
+          <p class="mono-label" style="margin-top:28px">Respuesta en menos de 24 h hábiles</p>
         </div>
+
         <div>
           <QuoteForm />
         </div>
       </div>
-    </div>
+    </section>
   </main>
 
   <Footer />
 </Base>
 
 <style>
-  .h1 { font-size: clamp(2rem, 4vw, 3.2rem); margin: var(--s-2) 0 var(--s-4); }
-  .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(32px, 5vw, 64px); margin-top: var(--s-6); }
-  .contact-list { list-style: none; padding: 0; display: grid; gap: var(--s-4); }
-  .contact-list li { display: grid; grid-template-columns: 110px 1fr; gap: var(--s-3); align-items: baseline; padding-bottom: var(--s-3); border-bottom: 1px solid var(--line); }
-  .contact-list span:first-child { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
-  .contact-list a { color: var(--ink); text-decoration: none; }
-  .contact-list a:hover { text-decoration: underline; text-underline-offset: 4px; }
-  @media (max-width: 760px) { .contact-grid { grid-template-columns: 1fr; } }
+  .page-hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(48px, 7vw, 88px) 0 clamp(24px, 3vw, 36px);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: start;
+  }
+
+  .contact-list { display: grid; gap: 0; border-top: 1px solid var(--line); }
+
+  .contact-list li {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 16px;
+    align-items: baseline;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .contact-list li > span:first-child {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+
+  .contact-list a {
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 14.5px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s var(--ease);
+  }
+  .contact-list a:hover { border-color: var(--line-strong); }
+
+  .ph { font-size: 14.5px; color: var(--fg-2); }
+
+  @media (max-width: 860px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
 </style>

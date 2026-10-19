@@ -3,75 +3,244 @@ import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MediaPlaceholder from '../components/MediaPlaceholder.astro';
-import { site, projects, about, url } from '../config';
+import Icon from '../components/Icon.astro';
+import { site, projects, services, process, about, allies, faqs, social, url } from '../config';
 
-const featured = projects.filter((p) => p.featured).slice(0, 3);
+const featured = projects.filter((p) => p.featured).slice(0, 4);
 ---
 <Base title={`${site.name} — ${site.tagline}`} description={site.description}>
   <Header />
 
   <main>
-    <!-- HOME: una sola imagen potente + nombre del estudio -->
-    <section class="hero hero--image" data-reveal>
-      <MediaPlaceholder label="Imagen de obra" sublabel="Fotografía a pantalla completa (pendiente)" variant="dark" class="hero-media" />
-      <div class="container hero-overlay">
-        <p class="eyebrow">{site.tagline}</p>
-        <h1 class="display">{site.name}</h1>
-        <p class="hero-lede">
-          Arquitectura, ingeniería y diseño interior. Proyectos y obras en Caracas.
-        </p>
+    <!-- ============ HERO ============ -->
+    <section class="hero glow">
+      <div class="grid-lines" aria-hidden="true"></div>
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <p class="eyebrow">Arquitectura · Caracas</p>
+
+          <h1 class="display">Grupo<br />LA</h1>
+
+          <p class="hero__sub">
+            Diseñamos, calculamos y ejecutamos<br class="hide-sm" /> obras que se sostienen.
+          </p>
+
+          <p class="hero__lede">
+            Arquitectura, ingeniería, diseño interior y remodelación con presupuesto por
+            partidas, un responsable por obra y avance documentado.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary btn--lg" href={url('/contacto')}>Solicitar cotización</a>
+            <a class="btn btn--ghost btn--lg" href={url('/proyectos')}>
+              Ver proyectos <Icon name="arrow" size={16} />
+            </a>
+          </div>
+
+          <dl class="hero__stats">
+            {site.stats.map((s) => (
+              <div>
+                <dt>{s.label}</dt>
+                <dd>{s.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div class="hero__visual">
+          <div class="hero__frame">
+            <MediaPlaceholder
+              label="Obra en ejecución"
+              sublabel="Fotografía a pantalla completa · pendiente"
+              variant="dark"
+              class="hero__media"
+            />
+            <div class="hero__frame-tag"><span class="dot"></span> Caracas · 2026</div>
+          </div>
+          <div class="hero__caption">
+            <span class="mono-label">Fig. 01</span>
+            <span class="mono-label">Casa · remodelación integral</span>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- WORK: listado limpio de proyectos estrella -->
-    <section class="section">
+    <!-- ============ SERVICIOS ============ -->
+    <section class="section" id="servicios">
       <div class="container">
         <div class="section-head">
-          <p class="eyebrow">Work</p>
-          <h2 class="h2">Proyectos seleccionados</h2>
+          <p class="eyebrow">Servicios</p>
+          <h2 class="h2">Todo lo que una obra necesita, bajo un mismo techo</h2>
           <p class="lead">
-            Una muestra del trabajo reciente. Cada proyecto abre su ficha con foto, planos y memoria.
+            Del primer plano al último remate. Si el proyecto ya existe, lo ejecutamos;
+            si no existe, lo desarrollamos.
           </p>
         </div>
-        <div class="project-list">
-          {featured.map((p, i) => (
-            <a class="project-row" href={url(`/proyectos/${p.slug}`)} data-reveal>
-              <div class="project-row__media">
-                <MediaPlaceholder label={p.title} sublabel="Foto del proyecto (pendiente)" variant="dark" />
+
+        <div class="services">
+          {services.map((s, i) => (
+            <article class="card card--pad card--hover">
+              <div class="service__top">
+                <span class="icon-badge"><Icon name={s.icon} size={18} /></span>
+                <span class="mono-label">{String(i + 1).padStart(2, '0')}</span>
               </div>
-              <div class="project-row__body">
-                <span class="project-row__num">{String(i + 1).padStart(2, '0')}</span>
-                <h3 class="project-row__title">{p.title}</h3>
-                <p class="project-row__meta">{p.meta}</p>
+              <h3 class="h3" style="margin-top:20px">{s.title}</h3>
+              <p class="service__desc">{s.desc}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROYECTOS ============ -->
+    <section class="section" id="proyectos">
+      <div class="container">
+        <div class="section-head section-head--row">
+          <div>
+            <p class="eyebrow">Proyectos</p>
+            <h2 class="h2">Trabajo reciente</h2>
+          </div>
+          <a class="btn btn--ghost" href={url('/proyectos')}>
+            Ver todos <Icon name="arrow" size={16} />
+          </a>
+        </div>
+
+        <div class="projects">
+          {featured.map((p) => (
+            <a class="project-card" href={url(`/proyectos/${p.slug}`)}>
+              <div class="project-card__media">
+                <MediaPlaceholder label={p.title} sublabel="Foto del proyecto · pendiente" variant="dark" />
+              </div>
+              <div class="project-card__body">
+                <span class="project-card__type">{p.typology}</span>
+                <h3 class="project-card__title">{p.title}</h3>
+                <p class="project-card__meta">{p.meta}</p>
               </div>
             </a>
           ))}
         </div>
-        <p class="more-link">
-          <a href={url('/proyectos')}>Ver todos los proyectos →</a>
-        </p>
       </div>
     </section>
 
-    <!-- PROFILE teaser -->
-    <section class="section section--paper2">
-      <div class="container profile-teaser">
-        <p class="eyebrow">Profile</p>
-        <h2 class="h2">Detrás de Grupo LA está la Arq. Luz Aché</h2>
-        <p class="lead">{about.paragraphs[0]}</p>
-        <a href={url('/perfil')} class="text-link">Leer perfil completo →</a>
+    <!-- ============ PROCESO ============ -->
+    <section class="section" id="proceso">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Proceso</p>
+          <h2 class="h2">Cuatro pasos, sin sorpresas</h2>
+        </div>
+
+        <ol class="process">
+          {process.map((s) => (
+            <li>
+              <span class="process__step">{s.step}</span>
+              <h3 class="process__title">{s.title}</h3>
+              <p class="process__desc">{s.desc}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
 
-    <!-- CONTACT teaser -->
+    <!-- ============ PERFIL ============ -->
+    <section class="section" id="perfil">
+      <div class="container split">
+        <div>
+          <p class="eyebrow">Perfil</p>
+          <h2 class="h2" style="margin-top:16px">Detrás de Grupo LA está la Arq. Luz Aché</h2>
+          <p class="lead" style="margin-top:24px">{about.paragraphs[0]}</p>
+          <ul class="checklist" style="margin-top:28px">
+            {about.bullets.map((b) => (
+              <li>
+                <Icon name="check" size={16} />
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+          <p style="margin-top:28px">
+            <a class="text-link" href={url('/perfil')}>Leer el perfil completo →</a>
+          </p>
+        </div>
+
+        <div>
+          <MediaPlaceholder label="Arq. Luz Aché" sublabel="Retrato · pendiente" variant="dark" class="portrait" />
+          <p class="mono-label" style="margin-top:12px">@larquitecto_ · Grupo LA</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ALIADOS ============ -->
     <section class="section">
-      <div class="container contact-teaser">
-        <p class="eyebrow">Contact</p>
-        <h2 class="h2">Hablemos de tu obra</h2>
-        <p class="lead">
-          {site.contact.email} · {site.contact.whatsappNumber}
-        </p>
-        <a href={url('/contacto')} class="btn btn--primary">Contactar</a>
+      <div class="container split">
+        <div>
+          <p class="eyebrow">Aliados</p>
+          <h2 class="h2" style="margin-top:16px">La obra se hace en equipo</h2>
+          <p class="lead" style="margin-top:20px">
+            Mobiliario a medida, mármol, iluminación, climatización y herrería: talleres
+            con los que resolvemos cada detalle.
+          </p>
+        </div>
+        <ul class="allies">
+          {allies.map((a) => (
+            <li>
+              <a
+                href={`https://www.instagram.com/${a.handle.replace('@', '')}/`}
+                target="_blank"
+                rel="noopener"
+              >
+                <strong>{a.handle}</strong>
+                <span>{a.role}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section" id="faq">
+      <div class="container split">
+        <div>
+          <p class="eyebrow">Preguntas</p>
+          <h2 class="h2" style="margin-top:16px">Lo que siempre nos preguntan</h2>
+          <p class="lead" style="margin-top:20px">
+            ¿Quedó algo fuera? Escríbenos y lo respondemos sin compromiso.
+          </p>
+          <p style="margin-top:24px">
+            <a class="btn btn--ghost" href={url('/contacto')}>Hacer una pregunta</a>
+          </p>
+        </div>
+        <div class="faq">
+          {faqs.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="section cta-section glow" id="cotizar">
+      <div class="container">
+        <div class="cta">
+          <div class="cta__inner">
+            <p class="eyebrow">Siguiente paso</p>
+            <h2 class="h2" style="margin-top:18px">Hablemos de tu obra</h2>
+            <p class="lead" style="margin-top:18px">
+              Cuéntanos qué espacio quieres intervenir. Coordinamos una visita de
+              levantamiento y entregamos presupuesto por partidas, por escrito.
+            </p>
+            <div class="hero__actions" style="margin-top:28px">
+              <a class="btn btn--primary btn--lg" href={url('/contacto')}>Solicitar cotización</a>
+              <a class="btn btn--ghost btn--lg" href={social.instagramHref} target="_blank" rel="noopener">
+                Ver Instagram
+              </a>
+            </div>
+            <p class="mono-label" style="margin-top:24px">Visita sin costo · Caracas y Gran Caracas</p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -80,60 +249,223 @@ const featured = projects.filter((p) => p.featured).slice(0, 3);
 </Base>
 
 <style>
-  .hero--image {
+  .hero {
     position: relative;
-    min-height: 100vh;
-    display: grid;
-    align-items: end;
-    padding: 0 0 clamp(48px, 6vw, 80px);
     overflow: hidden;
-    background: var(--ink);
-    color: #fff;
+    padding: clamp(48px, 7vw, 88px) 0 clamp(56px, 8vw, 104px);
+    border-bottom: 1px solid var(--line-soft);
   }
-  .hero-media {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-  .hero-media .media-ph { height: 100%; border: 0; }
-  .hero-overlay {
+
+  .hero__inner {
     position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.02fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+
+  .hero .display { margin: 18px 0 0; }
+
+  .hero__sub {
+    margin-top: 26px;
+    font-size: clamp(20px, 2.6vw, 31px);
+    line-height: 1.18;
+    letter-spacing: -0.032em;
+    font-weight: 450;
+    text-wrap: balance;
+  }
+
+  .hero__lede {
+    margin-top: 18px;
+    font-size: clamp(14.5px, 1.3vw, 16.5px);
+    line-height: 1.65;
+    color: var(--fg-2);
+    max-width: 48ch;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 30px;
+  }
+
+  .hero__stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+
+  .hero__stats > div { display: flex; flex-direction: column; }
+
+  .hero__stats dt {
+    order: 2;
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--fg-3);
+  }
+
+  .hero__stats dd {
+    order: 1;
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 15px;
+    color: var(--fg);
+  }
+
+  .hero__visual { position: relative; }
+
+  .hero__frame {
+    position: relative;
+    border-radius: var(--r-lg);
+    padding: 6px;
+    border: 1px solid var(--line);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), transparent 55%);
+  }
+
+  .hero__frame :global(.hero__media) { aspect-ratio: 4 / 4.3; border-radius: 11px; }
+
+  .hero__frame-tag {
+    position: absolute;
+    left: 18px;
+    bottom: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 11px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: var(--fg-2);
     z-index: 2;
   }
-  .hero--image .eyebrow { color: rgba(255,255,255,0.7); }
-  .hero--image .hero-lede { color: rgba(255,255,255,0.7); max-width: 46ch; }
-  .hero--image h1 { color: #fff; }
-  .hero-lede { margin-top: var(--s-4); font-size: 1.05rem; }
 
-  .project-list { display: grid; gap: clamp(48px, 6vw, 80px); margin-top: var(--s-7); }
-  .project-row {
+  .hero__frame-tag .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #8ef2a4;
+    box-shadow: 0 0 10px rgba(142, 242, 164, 0.8);
+  }
+
+  .hero__caption {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .services {
     display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: clamp(24px, 4vw, 56px);
-    align-items: center;
-    text-decoration: none;
-    color: inherit;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
   }
-  .project-row__media .media-ph { aspect-ratio: 4 / 3; }
-  .project-row__num {
-    display: block;
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
-    color: var(--muted);
-    margin-bottom: var(--s-3);
+
+  .service__top { display: flex; align-items: center; justify-content: space-between; }
+
+  .service__desc {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--fg-2);
   }
-  .project-row__title { font-size: clamp(1.5rem, 2.6vw, 2.2rem); margin: 0 0 var(--s-2); }
-  .project-row__meta { color: var(--muted); font-size: 0.9rem; margin: 0; }
-  .project-row:hover .project-row__title { text-decoration: underline; text-underline-offset: 4px; }
 
-  .profile-teaser, .contact-teaser { max-width: 62ch; }
-  .text-link { display: inline-block; margin-top: var(--s-5); color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
-  .more-link { margin-top: var(--s-6); }
-  .more-link a { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+  .section-head--row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    max-width: none;
+    flex-wrap: wrap;
+  }
 
-  @media (max-width: 760px) {
-    .project-row { grid-template-columns: 1fr; gap: var(--s-4); }
-    .hero--image { min-height: 80vh; }
+  .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+  .process {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+  }
+
+  .process li {
+    padding: 26px 24px 30px 0;
+    border-right: 1px solid var(--line);
+  }
+
+  .process li:last-child { border-right: 0; }
+
+  .process__step {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--fg-4);
+  }
+
+  .process__title {
+    margin-top: 16px;
+    font-size: 16.5px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .process__desc { margin-top: 8px; font-size: 13.5px; line-height: 1.6; color: var(--fg-2); }
+
+  .portrait { aspect-ratio: 4 / 5; }
+
+  .checklist { display: grid; gap: 12px; }
+
+  .checklist li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 14.5px;
+    color: var(--fg-2);
+    line-height: 1.55;
+  }
+
+  .checklist :global(svg) { flex: 0 0 auto; margin-top: 3px; opacity: 0.85; }
+
+  .cta-section { border-top: 0; padding-top: 0; }
+
+  .cta {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(90% 120% at 15% 0%, rgba(255, 255, 255, 0.1), transparent 55%),
+      var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+  }
+
+  .cta__inner { padding: clamp(28px, 5vw, 64px); max-width: 720px; }
+
+  @media (max-width: 1080px) {
+    .services { grid-template-columns: repeat(2, 1fr); }
+    .process { grid-template-columns: repeat(2, 1fr); }
+    .process li:nth-child(2) { border-right: 0; }
+  }
+
+  @media (max-width: 900px) {
+    .hero__inner { grid-template-columns: 1fr; }
+    .hero__visual { order: -1; }
+    .hero__frame :global(.hero__media) { aspect-ratio: 16 / 11; }
+    .hero__stats { grid-template-columns: repeat(2, 1fr); }
+    .projects { grid-template-columns: 1fr; }
+    .hide-sm { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    .services { grid-template-columns: 1fr; }
+    .process { grid-template-columns: 1fr; }
+    .process li { border-right: 0; border-bottom: 1px solid var(--line); padding-right: 0; }
+    .process li:last-child { border-bottom: 0; }
   }
 </style>
