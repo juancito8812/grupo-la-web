@@ -1,0 +1,101 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import MediaPlaceholder from '../../components/MediaPlaceholder.astro';
+import { site, projects, typologies, url } from '../../config';
+---
+<Base title={`Proyectos — ${site.name}`} description="Listado de proyectos de Grupo LA.">
+  <Header />
+
+  <main class="section">
+    <div class="container">
+      <p class="eyebrow">Work</p>
+      <h1 class="h1">Proyectos</h1>
+      <p class="lead" style="max-width:56ch;margin-top:var(--s-3)">
+        Filtro por tipología. Cada proyecto abre su ficha con foto, planos y memoria descriptiva.
+      </p>
+
+      <div class="filters" role="tablist" aria-label="Filtrar por tipología">
+        {typologies.map((t, i) => (
+          <button class={`filter ${i === 0 ? 'is-active' : ''}`} data-filter={t} type="button">
+            {t}
+          </button>
+        ))}
+      </div>
+
+      <div class="projects-grid" id="projects-grid">
+        {projects.map((p) => (
+          <a class="project-card" href={url(`/proyectos/${p.slug}`)} data-typology={p.typology}>
+            <div class="project-card__media">
+              <MediaPlaceholder label={p.title} sublabel="Foto del proyecto (pendiente)" variant="dark" />
+            </div>
+            <div class="project-card__body">
+              <span class="project-card__type">{p.typology}</span>
+              <h3 class="project-card__title">{p.title}</h3>
+              <p class="project-card__meta">{p.meta}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+
+  <script is:inline>
+    (function () {
+      const btns = document.querySelectorAll('.filter');
+      const cards = document.querySelectorAll('.project-card');
+      btns.forEach((b) => {
+        b.addEventListener('click', () => {
+          btns.forEach((x) => x.classList.remove('is-active'));
+          b.classList.add('is-active');
+          const f = b.getAttribute('data-filter');
+          cards.forEach((c) => {
+            const t = c.getAttribute('data-typology');
+            c.style.display = (f === 'Todos' || f === t) ? '' : 'none';
+          });
+        });
+      });
+    })();
+  </script>
+</Base>
+
+<style>
+  .h1 { font-size: clamp(2rem, 4vw, 3.2rem); margin: var(--s-2) 0 var(--s-4); }
+  .filters { display: flex; gap: var(--s-3); margin: var(--s-6) 0 var(--s-7); flex-wrap: wrap; }
+  .filter {
+    background: none;
+    border: 1px solid var(--line);
+    padding: 8px 16px;
+    font: inherit;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all .15s ease;
+  }
+  .filter.is-active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(32px, 4vw, 56px);
+  }
+  .project-card { text-decoration: none; color: inherit; display: block; }
+  .project-card__media .media-ph { aspect-ratio: 4 / 3; }
+  .project-card__body { padding-top: var(--s-3); }
+  .project-card__type {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: var(--s-2);
+  }
+  .project-card__title { font-size: 1.35rem; margin: 0 0 var(--s-1); }
+  .project-card__meta { color: var(--muted); font-size: 0.85rem; margin: 0; }
+  @media (max-width: 760px) {
+    .projects-grid { grid-template-columns: 1fr; }
+  }
+</style>

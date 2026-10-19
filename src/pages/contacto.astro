@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import Icon from '../components/Icon.astro';
+import { site, quoteForm, social, url } from '../config';
+---
+<Base title={`Contacto — ${site.name}`} description="Contacto directo con Grupo LA.">
+  <Header />
+
+  <main class="section">
+    <div class="container">
+      <p class="eyebrow">Contact</p>
+      <h1 class="h1">Hablemos de tu obra</h1>
+      <p class="lead" style="max-width:56ch;margin-top:var(--s-3)">
+        {quoteForm.subtitle}
+      </p>
+
+      <div class="contact-grid">
+        <div>
+          <ul class="contact-list">
+            <li>
+              <span>Teléfono</span>
+              {site.contact.phoneHref
+                ? <a href={site.contact.phoneHref}>{site.contact.phone}</a>
+                : <span class="placeholder">{site.contact.phone}</span>}
+            </li>
+            <li>
+              <span>WhatsApp</span>
+              {site.contact.whatsappHref
+                ? <a href={site.contact.whatsappHref}>{site.contact.whatsappNumber}</a>
+                : <span class="placeholder">{site.contact.whatsappNumber}</span>}
+            </li>
+            <li>
+              <span>Correo</span>
+              {site.contact.emailHref
+                ? <a href={site.contact.emailHref}>{site.contact.email}</a>
+                : <span class="placeholder">{site.contact.email}</span>}
+            </li>
+            <li>
+              <span>Instagram</span>
+              <a href={social.instagramHref} target="_blank" rel="noopener">{social.instagramHandle}</a>
+            </li>
+          </ul>
+
+          {site.contact.whatsappHref && (
+            <a class="btn btn--primary" href={site.contact.whatsappHref} style="margin-top:var(--s-5)">
+              <Icon name="whatsapp" size={18} /> Escribir por WhatsApp
+            </a>
+          )}
+        </div>
+        <div>
+          <QuoteForm />
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .h1 { font-size: clamp(2rem, 4vw, 3.2rem); margin: var(--s-2) 0 var(--s-4); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(32px, 5vw, 64px); margin-top: var(--s-6); }
+  .contact-list { list-style: none; padding: 0; display: grid; gap: var(--s-4); }
+  .contact-list li { display: grid; grid-template-columns: 110px 1fr; gap: var(--s-3); align-items: baseline; padding-bottom: var(--s-3); border-bottom: 1px solid var(--line); }
+  .contact-list span:first-child { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+  .contact-list a { color: var(--ink); text-decoration: none; }
+  .contact-list a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  @media (max-width: 760px) { .contact-grid { grid-template-columns: 1fr; } }
+</style>

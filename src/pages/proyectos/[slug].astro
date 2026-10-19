@@ -1,0 +1,65 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import MediaPlaceholder from '../../components/MediaPlaceholder.astro';
+import { site, projects, url } from '../../config';
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+---
+<Base title={`${project.title} — ${site.name}`} description={project.summary}>
+  <Header />
+
+  <main class="section">
+    <div class="container">
+      <a href={url('/proyectos')} class="back-link">← Proyectos</a>
+
+      <div class="case-head">
+        <p class="eyebrow">{project.typology}</p>
+        <h1 class="h1">{project.title}</h1>
+        <p class="lead">{project.meta}</p>
+      </div>
+
+      <div class="case-media">
+        <MediaPlaceholder label="Foto del edificio terminado" sublabel="Antes / durante / después (pendiente)" variant="dark" />
+      </div>
+
+      <div class="case-body">
+        <h2 class="h3">Memoria descriptiva</h2>
+        <p class="lead">{project.summary}</p>
+
+        <h2 class="h3" style="margin-top:var(--s-7)">Planos técnicos</h2>
+        <div class="plans">
+          <MediaPlaceholder label="Planta" sublabel="Pendiente" variant="light" />
+          <MediaPlaceholder label="Axonométrico" sublabel="Pendiente" variant="light" />
+        </div>
+
+        <div class="tags" style="margin-top:var(--s-6)">
+          {project.tags.map((t) => <span class="tag">{t}</span>)}
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .back-link { display: inline-block; margin-bottom: var(--s-5); color: var(--muted); text-decoration: none; font-size: 0.85rem; }
+  .back-link:hover { color: var(--ink); }
+  .case-head { max-width: 62ch; margin-bottom: var(--s-6); }
+  .h1 { font-size: clamp(2rem, 4vw, 3.2rem); margin: var(--s-2) 0 var(--s-3); }
+  .h3 { font-size: 1.15rem; margin: 0 0 var(--s-3); letter-spacing: -0.01em; }
+  .case-media { margin: var(--s-6) 0; }
+  .case-media .media-ph { aspect-ratio: 16 / 9; }
+  .case-body { max-width: 62ch; }
+  .plans { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s-4); margin-top: var(--s-4); }
+  .plans .media-ph { aspect-ratio: 4 / 3; }
+  .tags { display: flex; gap: var(--s-2); flex-wrap: wrap; }
+  .tag { font-size: 0.75rem; padding: 4px 10px; border: 1px solid var(--line); color: var(--muted); }
+  @media (max-width: 760px) { .plans { grid-template-columns: 1fr; } }
+</style>

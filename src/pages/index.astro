@@ -2,283 +2,138 @@
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Icon from '../components/Icon.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import QuoteForm from '../components/QuoteForm.astro';
-import { site, services, process, projects, about, allies, social, faqs, quoteForm, url } from '../config';
+import MediaPlaceholder from '../components/MediaPlaceholder.astro';
+import { site, projects, about, url } from '../config';
 
-const igUrl = (handle: string) => `https://www.instagram.com/${handle.replace('@', '')}/`;
+const featured = projects.filter((p) => p.featured).slice(0, 3);
 ---
-
-<Base>
-  {site.demo && (
-    <div class="demo-bar">
-      <div class="container">
-        <strong>Demo</strong>
-        <span>{site.demoNotice}</span>
-      </div>
-    </div>
-  )}
-
+<Base title={`${site.name} — ${site.tagline}`} description={site.description}>
   <Header />
 
   <main>
-    <!-- HERO -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-top">
-          <span>Grupo LA — Caracas, Venezuela</span>
-          <span>Arquitectura · Ingeniería · Diseño interior</span>
-        </div>
-
-        <div class="hero-body">
-          <div>
-            <h1>Proyectos que se piensan y obras que <em>se entregan</em>.</h1>
-            <p class="lead">
-              Diseñamos, calculamos, inspeccionamos y ejecutamos obras en casas, apartamentos,
-              oficinas y locales. Un mismo responsable del primer plano a la entrega.
-            </p>
-            <div class="hero-actions">
-              <a class="btn btn--primary" href={url('#cotizar')}>
-                Pedir cotización
-                <Icon name="arrow" size={18} />
-              </a>
-              <a class="btn btn--ghost" href={url('#proyectos')}>Ver proyectos</a>
-            </div>
-          </div>
-
-          <div class="hero-rail">
-            <span class="hero-rail-title">Disciplinas</span>
-            <ul>
-              {services.map((service, i) => (
-                <li>
-                  <span>{String(i + 1).padStart(2, '0')}</span>
-                  {service.title}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div class="hero-foot">
-          <span>Visita de levantamiento sin costo en {site.contact.serviceArea}</span>
-          <span>
-            Obra en proceso en{' '}
-            <a href={social.instagramHref} target="_blank" rel="noopener">{social.instagramHandle}</a>
-          </span>
-        </div>
+    <!-- HOME: una sola imagen potente + nombre del estudio -->
+    <section class="hero hero--image" data-reveal>
+      <MediaPlaceholder label="Imagen de obra" sublabel="Fotografía a pantalla completa (pendiente)" variant="dark" class="hero-media" />
+      <div class="container hero-overlay">
+        <p class="eyebrow">{site.tagline}</p>
+        <h1 class="display">{site.name}</h1>
+        <p class="hero-lede">
+          Arquitectura, ingeniería y diseño interior. Proyectos y obras en Caracas.
+        </p>
       </div>
     </section>
 
-    <!-- SERVICIOS -->
-    <section class="section" id="servicios" data-reveal>
+    <!-- WORK: listado limpio de proyectos estrella -->
+    <section class="section">
       <div class="container">
-        <div class="section-head section-head--split">
-          <div>
-            <h2>Todo lo que una obra necesita,<br />en un solo equipo</h2>
-          </div>
+        <div class="section-head">
+          <p class="eyebrow">Work</p>
+          <h2 class="h2">Proyectos seleccionados</h2>
           <p class="lead">
-            Del proyecto a la entrega: diseño, cálculo, inspección y ejecución coordinados por el
-            mismo equipo, para que no tengas que conseguir cinco profesionales distintos.
+            Una muestra del trabajo reciente. Cada proyecto abre su ficha con foto, planos y memoria.
           </p>
         </div>
-
-        <ul class="service-list">
-          {services.map((service, i) => (
-            <li class="service">
-              <span class="service-num">{String(i + 1).padStart(2, '0')}</span>
-              <h3>{service.title}</h3>
-              <p>{service.desc}</p>
-              <span class="service-icon"><Icon name="arrow" size={18} /></span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-
-    <!-- PROYECTOS -->
-    <section class="section section--paper2" id="proyectos" data-reveal>
-      <div class="container">
-        <div class="section-head section-head--split">
-          <div>
-            <h2>Antes y después,<br />sin adornos</h2>
-          </div>
-          <p class="lead">
-            Cada obra se documenta con fotos de antes, durante y después. Los proyectos son reales;
-            las fotos antes/después están pendientes de entrega por el cliente.
-          </p>
-        </div>
-
-        <div class="projects">
-          {projects.map((project) => (
-            <ProjectCard
-              title={project.title}
-              meta={project.meta}
-              summary={project.summary}
-              tags={project.tags}
-              wide={Boolean(project.featured)}
-            />
+        <div class="project-list">
+          {featured.map((p, i) => (
+            <a class="project-row" href={url(`/proyectos/${p.slug}`)} data-reveal>
+              <div class="project-row__media">
+                <MediaPlaceholder label={p.title} sublabel="Foto del proyecto (pendiente)" variant="dark" />
+              </div>
+              <div class="project-row__body">
+                <span class="project-row__num">{String(i + 1).padStart(2, '0')}</span>
+                <h3 class="project-row__title">{p.title}</h3>
+                <p class="project-row__meta">{p.meta}</p>
+              </div>
+            </a>
           ))}
         </div>
+        <p class="more-link">
+          <a href={url('/proyectos')}>Ver todos los proyectos →</a>
+        </p>
       </div>
     </section>
 
-    <!-- PROCESO -->
-    <section class="section" id="proceso" data-reveal>
-      <div class="container">
-        <div class="section-head section-head--split">
-          <div><h2>Cuatro pasos, cero sorpresas</h2></div>
-          <p class="lead">
-            El proceso es el mismo para un baño o para una obra completa: medir, presupuestar por
-            partidas, ejecutar con reportes y entregar con checklist.
-          </p>
-        </div>
-
-        <div class="steps">
-          {process.map((item) => (
-            <div class="step">
-              <span class="step-num">{item.step}</span>
-              <h3>{item.title}</h3>
-              <p>{item.desc}</p>
-            </div>
-          ))}
-        </div>
+    <!-- PROFILE teaser -->
+    <section class="section section--paper2">
+      <div class="container profile-teaser">
+        <p class="eyebrow">Profile</p>
+        <h2 class="h2">Detrás de Grupo LA está la Arq. Luz Aché</h2>
+        <p class="lead">{about.paragraphs[0]}</p>
+        <a href={url('/perfil')} class="text-link">Leer perfil completo →</a>
       </div>
     </section>
 
-    <!-- NOSOTROS -->
-    <section class="section section--paper2" id="nosotros" data-reveal>
-      <div class="container">
-        <div class="about-grid">
-          <div>
-            <h2>{about.title}</h2>
-            {about.paragraphs.map((paragraph) => <p class="lead">{paragraph}</p>)}
-            <ul class="about-list">
-              {about.bullets.map((bullet) => (
-                <li>
-                  <Icon name="check" size={17} />
-                  <span>{bullet}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <figure class="pull">
-            <p>«Un solo árbol no hace montaña.»</p>
-            <footer>Arq. Luz Aché · Fundadora de Grupo LA</footer>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- ALIADOS -->
-    <section class="section section--dark" data-reveal>
-      <div class="container">
-        <div class="section-head section-head--split">
-          <div>
-            <span class="eyebrow">Aliados</span>
-            <h2>La obra se hace en equipo</h2>
-          </div>
-          <p class="lead">
-            Para mobiliario, mármol, iluminación y climatización trabajamos con talleres de
-            confianza que ya conocen nuestra forma de ejecutar.
-          </p>
-        </div>
-
-        <ul class="allies">
-          {allies.map((ally) => (
-            <li>
-              <a href={igUrl(ally.handle)} target="_blank" rel="noopener">
-                <strong>{ally.handle}</strong>
-                <span>{ally.role}</span>
-                <Icon name="arrow" size={16} />
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <div class="ally-cta">
-          <a class="btn btn--primary" href={social.instagramHref} target="_blank" rel="noopener">
-            <Icon name="instagram" size={18} />
-            {social.label}
-          </a>
-          <p class="lead">{social.instagramHandle} — {social.note}</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section" id="faq" data-reveal>
-      <div class="container">
-        <div class="section-head section-head--split">
-          <div><h2>Lo que más preguntan<br />antes de firmar</h2></div>
-          <p class="lead">
-            Si tu duda no está aquí, escríbenos por Instagram o deja el formulario: respondemos
-            igual, sin compromiso.
-          </p>
-        </div>
-
-        <div class="faq">
-          {faqs.map((faq) => (
-            <details>
-              <summary>{faq.q}</summary>
-              <p>{faq.a}</p>
-            </details>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- COTIZAR -->
-    <section class="section section--dark" id="cotizar" data-reveal>
-      <div class="container">
-        <div class="quote-wrap">
-          <div class="quote-side">
-            <span class="eyebrow">Cotización</span>
-            <h2>{quoteForm.title}</h2>
-            <p class="lead">{quoteForm.subtitle}</p>
-            <ul class="contact-list">
-              <li>
-                <span>Teléfono</span>
-                {site.contact.phoneHref
-                  ? <a href={site.contact.phoneHref}>{site.contact.phone}</a>
-                  : <span class="placeholder">{site.contact.phone}</span>}
-              </li>
-              <li>
-                <span>WhatsApp</span>
-                {site.contact.whatsappHref
-                  ? <a href={site.contact.whatsappHref}>{site.contact.whatsappNumber}</a>
-                  : <span class="placeholder">{site.contact.whatsappNumber}</span>}
-              </li>
-              <li>
-                <span>Correo</span>
-                {site.contact.emailHref
-                  ? <a href={site.contact.emailHref}>{site.contact.email}</a>
-                  : <span class="placeholder">{site.contact.email}</span>}
-              </li>
-              <li>
-                <span>Instagram</span>
-                <a href={social.instagramHref} target="_blank" rel="noopener">
-                  {social.instagramHandle}
-                </a>
-              </li>
-              <li>
-                <span>Oficina</span>
-                <span class="placeholder">{site.contact.address}</span>
-              </li>
-            </ul>
-          </div>
-          <QuoteForm />
-        </div>
+    <!-- CONTACT teaser -->
+    <section class="section">
+      <div class="container contact-teaser">
+        <p class="eyebrow">Contact</p>
+        <h2 class="h2">Hablemos de tu obra</h2>
+        <p class="lead">
+          {site.contact.email} · {site.contact.whatsappNumber}
+        </p>
+        <a href={url('/contacto')} class="btn btn--primary">Contactar</a>
       </div>
     </section>
   </main>
 
   <Footer />
-
-  {site.contact.whatsappHref && (
-    <a class="wa-float" href={site.contact.whatsappHref} aria-label="Escribir por WhatsApp">
-      <Icon name="whatsapp" size={20} />
-      <span>WhatsApp</span>
-    </a>
-  )}
 </Base>
+
+<style>
+  .hero--image {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    align-items: end;
+    padding: 0 0 clamp(48px, 6vw, 80px);
+    overflow: hidden;
+    background: var(--ink);
+    color: #fff;
+  }
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .hero-media .media-ph { height: 100%; border: 0; }
+  .hero-overlay {
+    position: relative;
+    z-index: 2;
+  }
+  .hero--image .eyebrow { color: rgba(255,255,255,0.7); }
+  .hero--image .hero-lede { color: rgba(255,255,255,0.7); max-width: 46ch; }
+  .hero--image h1 { color: #fff; }
+  .hero-lede { margin-top: var(--s-4); font-size: 1.05rem; }
+
+  .project-list { display: grid; gap: clamp(48px, 6vw, 80px); margin-top: var(--s-7); }
+  .project-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: clamp(24px, 4vw, 56px);
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+  }
+  .project-row__media .media-ph { aspect-ratio: 4 / 3; }
+  .project-row__num {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+    margin-bottom: var(--s-3);
+  }
+  .project-row__title { font-size: clamp(1.5rem, 2.6vw, 2.2rem); margin: 0 0 var(--s-2); }
+  .project-row__meta { color: var(--muted); font-size: 0.9rem; margin: 0; }
+  .project-row:hover .project-row__title { text-decoration: underline; text-underline-offset: 4px; }
+
+  .profile-teaser, .contact-teaser { max-width: 62ch; }
+  .text-link { display: inline-block; margin-top: var(--s-5); color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+  .more-link { margin-top: var(--s-6); }
+  .more-link a { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+
+  @media (max-width: 760px) {
+    .project-row { grid-template-columns: 1fr; gap: var(--s-4); }
+    .hero--image { min-height: 80vh; }
+  }
+</style>
