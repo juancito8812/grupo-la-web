@@ -1,58 +1,62 @@
 ---
 import Logo from './Logo.astro';
-import Icon from './Icon.astro';
 import { site, nav, social, url } from '../config';
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
-      <div>
+      <div class="footer-col">
         <a class="brand" href={url('')} style="color:#fff">
-          <Logo size={38} />
-          <span>
-            {site.name}
-            <small>{site.tagline}</small>
-          </span>
+          <Logo size={26} />
+          <span>{site.name}</span>
         </a>
-        <p style="margin-top:16px;font-size:.9rem;max-width:36ch">{site.description}</p>
+        <p style="margin-top:14px;font-size:14px;line-height:1.6;color:var(--fg-2);max-width:34ch">
+          {site.tagline}. Proyectos y obras en Caracas y Gran Caracas.
+        </p>
+        <a
+          class="text-link"
+          style="margin-top:18px"
+          href={social.instagramHref}
+          target="_blank"
+          rel="noopener"
+        >{social.instagramHandle} ↗</a>
       </div>
-      <div>
-        <h4>Secciones</h4>
+
+      <div class="footer-col">
+        <h4>Navegación</h4>
         <ul>
+          <li><a href={url('')}>Inicio</a></li>
           {nav.map((item) => <li><a href={url(item.href)}>{item.label}</a></li>)}
-          <li><a href={url('#cotizar')}>Cotizar</a></li>
+          <li><a href={url('/contacto#cotizar')}>Solicitar cotización</a></li>
         </ul>
       </div>
-      <div>
+
+      <div class="footer-col">
         <h4>Contacto</h4>
         <ul>
           <li>
-            {site.contact.phoneHref
-              ? <a href={site.contact.phoneHref}>{site.contact.phone}</a>
-              : site.contact.phone}
+            {site.contact.whatsappHref
+              ? <a href={site.contact.whatsappHref} target="_blank" rel="noopener">WhatsApp</a>
+              : <a href={url('/contacto')}>Escribir por el formulario</a>}
           </li>
-          {site.contact.whatsappHref && (
-            <li><a href={site.contact.whatsappHref}>WhatsApp</a></li>
-          )}
           <li>
             {site.contact.emailHref
               ? <a href={site.contact.emailHref}>{site.contact.email}</a>
-              : site.contact.email}
+              : <span style="color:var(--fg-3);font-size:14px">Correo por confirmar</span>}
           </li>
-          <li>{site.contact.address}</li>
-          <li>{site.contact.hours}</li>
-          <li>
-            <a href={social.instagramHref} target="_blank" rel="noopener">
-              <Icon name="instagram" size={16} /> {social.instagramHandle}
-            </a>
-          </li>
+          <li><span style="color:var(--fg-3);font-size:14px">{site.contact.address}</span></li>
+          <li><span style="color:var(--fg-3);font-size:14px">{site.contact.hours}</span></li>
         </ul>
       </div>
     </div>
+
+    <div class="footer-wordmark" aria-hidden="true" data-words="400">GRUPO LA</div>
+
     <div class="footer-bottom">
-      <span>© {year} {site.name}. Todos los derechos reservados.</span>
-      <span>{site.demo ? 'Sitio en construcción · contenido de demostración' : ''}</span>
+      <span>© {year} {site.name}</span>
+      <span>{site.contact.serviceArea}</span>
+      <span>{site.demo ? 'Contenido de demostración' : 'Caracas · Venezuela'}</span>
     </div>
   </div>
 </footer>

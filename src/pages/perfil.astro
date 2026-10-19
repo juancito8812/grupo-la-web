@@ -1,0 +1,152 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MediaPlaceholder from '../components/MediaPlaceholder.astro';
+import Icon from '../components/Icon.astro';
+import { site, about, allies, social, url } from '../config';
+---
+<Base title={`Perfil — ${site.name}`} description={about.title}>
+  <Header />
+
+  <main>
+    <section class="page-hero glow">
+      <div class="grid-lines" aria-hidden="true"></div>
+      <div class="container">
+        <p class="eyebrow">Perfil</p>
+        <h1 data-words class="h1" style="margin-top:18px">{about.title}</h1>
+      </div>
+    </section>
+
+    <section class="section" style="border-top:0;padding-top:0">
+      <div class="container split">
+        <div>
+          {about.paragraphs.map((p) => <p class="lead" style="margin-bottom:18px">{p}</p>)}
+
+          <ul class="checklist" style="margin-top:28px">
+            {about.bullets.map((b) => (
+              <li>
+                <Icon name="check" size={16} />
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="row" style="margin-top:32px">
+            <a class="btn btn--primary" href={url('/contacto')}>Solicitar cotización</a>
+            <a class="btn btn--ghost" href={social.instagramHref} target="_blank" rel="noopener">
+              {social.instagramHandle} ↗
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <MediaPlaceholder label="Arq. Luz Aché" sublabel="Retrato · pendiente" variant="dark" class="portrait" />
+          <div class="signature">
+            <p class="mono-label">Dirección de proyecto</p>
+            <p class="signature__name">Arq. Luz Aché</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Cómo trabajamos</p>
+          <h2 data-words class="h2">Un solo responsable, de la idea a la entrega</h2>
+          <p class="lead">
+            El diseño y la ejecución no se separan: quien proyecta conoce la obra y
+            quien ejecuta responde por el proyecto.
+          </p>
+        </div>
+
+        <div class="cards-3">
+          <article class="card card--pad">
+            <span class="icon-badge"><Icon name="compass" size={18} /></span>
+            <h3 class="h3" style="margin-top:18px">Proyecto antes de obra</h3>
+            <p class="card-p">Nada se ejecuta sin planos y presupuesto aprobados por escrito.</p>
+          </article>
+          <article class="card card--pad">
+            <span class="icon-badge"><Icon name="hardhat" size={18} /></span>
+            <h3 class="h3" style="margin-top:18px">Control en sitio</h3>
+            <p class="card-p">Visitas programadas, reporte fotográfico y control de materiales.</p>
+          </article>
+          <article class="card card--pad">
+            <span class="icon-badge"><Icon name="check" size={18} /></span>
+            <h3 class="h3" style="margin-top:18px">Cierre con garantía</h3>
+            <p class="card-p">Checklist de acabados firmado y garantía escrita sobre lo ejecutado.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container split">
+        <div>
+          <p class="eyebrow">Aliados</p>
+          <h2 data-words class="h2" style="margin-top:16px">La obra se hace en equipo</h2>
+          <p class="lead" style="margin-top:20px">
+            Talleres y especialistas con los que resolvemos mobiliario, mármol,
+            iluminación, climatización y herrería.
+          </p>
+        </div>
+        <ul class="allies">
+          {allies.map((a) => (
+            <li>
+              <a
+                href={`https://www.instagram.com/${a.handle.replace('@', '')}/`}
+                target="_blank"
+                rel="noopener"
+              >
+                <strong>{a.handle}</strong>
+                <span>{a.role}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .page-hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(48px, 7vw, 88px) 0 clamp(24px, 3vw, 36px);
+  }
+
+  .portrait { aspect-ratio: 4 / 5; }
+
+  .signature {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+
+  .signature__name { font-size: 14.5px; font-weight: 500; letter-spacing: -0.015em; }
+
+  .checklist { display: grid; gap: 12px; }
+  .checklist li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 14.5px;
+    color: var(--fg-2);
+    line-height: 1.55;
+  }
+  .checklist :global(svg) { flex: 0 0 auto; margin-top: 3px; opacity: 0.85; }
+
+  .cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .card-p { margin-top: 10px; font-size: 14px; line-height: 1.6; color: var(--fg-2); }
+
+  @media (max-width: 900px) { .cards-3 { grid-template-columns: 1fr; } }
+</style>

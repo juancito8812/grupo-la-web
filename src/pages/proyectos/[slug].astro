@@ -1,0 +1,149 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import MediaPlaceholder from '../../components/MediaPlaceholder.astro';
+import Icon from '../../components/Icon.astro';
+import { site, projects, url } from '../../config';
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+---
+<Base title={`${project.title} — ${site.name}`} description={project.summary}>
+  <Header />
+
+  <main>
+    <section class="page-hero glow">
+      <div class="grid-lines" aria-hidden="true"></div>
+      <div class="container">
+        <a href={url('/proyectos')} class="back-link">
+          <Icon name="arrow" size={14} /> Proyectos
+        </a>
+        <p class="eyebrow" style="margin-top:22px">{project.typology}</p>
+        <h1 data-words class="h1" style="margin-top:16px">{project.title}</h1>
+        <p class="lead" style="margin-top:18px">{project.meta}</p>
+      </div>
+    </section>
+
+    <section class="section" style="border-top:0;padding-top:0">
+      <div class="container">
+        <div class="case-media">
+          <MediaPlaceholder
+            label="Foto del proyecto terminado"
+            sublabel="Antes / durante / después · pendiente"
+            variant="dark"
+          />
+        </div>
+
+        <div class="case-grid">
+          <div class="case-body">
+            <p class="eyebrow">Memoria</p>
+            <h2 data-words class="h3" style="margin-top:14px">Alcance del proyecto</h2>
+            <p class="lead" style="margin-top:14px">{project.summary}</p>
+
+            <div class="tags" style="margin-top:28px">
+              {project.tags.map((t) => <span class="tag">{t}</span>)}
+            </div>
+          </div>
+
+          <aside class="card card--pad case-side">
+            <p class="mono-label">Ficha</p>
+            <dl>
+              <div><dt>Tipología</dt><dd>{project.typology}</dd></div>
+              <div><dt>Ubicación</dt><dd>Caracas</dd></div>
+              <div><dt>Estado</dt><dd>Ejecutado</dd></div>
+              <div><dt>Fotografía</dt><dd>Pendiente</dd></div>
+            </dl>
+            <a class="btn btn--primary btn--block" style="margin-top:22px" href={url('/contacto')}>
+              Quiero algo así
+            </a>
+          </aside>
+        </div>
+
+        <div class="plans-wrap">
+          <p class="eyebrow">Planos</p>
+          <h2 data-words class="h3" style="margin:14px 0 20px">Documentación técnica</h2>
+          <div class="plans">
+            <MediaPlaceholder label="Planta" sublabel="Pendiente" variant="light" />
+            <MediaPlaceholder label="Axonométrico" sublabel="Pendiente" variant="light" />
+          </div>
+        </div>
+
+        <div class="case-nav">
+          <a class="btn btn--ghost" href={url('/proyectos')}>
+            <Icon name="arrow" size={14} /> Todos los proyectos
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .page-hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(40px, 6vw, 72px) 0 clamp(28px, 4vw, 44px);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--fg-3);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s var(--ease);
+  }
+  .back-link:hover { color: var(--fg); }
+  .back-link :global(svg) { transform: rotate(180deg); }
+
+  .case-media :global(.media-ph) { aspect-ratio: 16 / 9; }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: clamp(28px, 4vw, 56px);
+    margin-top: clamp(32px, 4vw, 48px);
+    align-items: start;
+  }
+
+  .case-body { max-width: 64ch; }
+
+  .case-side dl { display: grid; gap: 0; margin-top: 16px; }
+  .case-side dl > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .case-side dl > div:last-child { border-bottom: 0; }
+  .case-side dt {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+  .case-side dd { margin: 0; font-size: 13.5px; color: var(--fg); text-align: right; }
+
+  .plans-wrap { margin-top: clamp(48px, 6vw, 80px); }
+
+  .plans { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+  .case-nav { margin-top: clamp(40px, 5vw, 64px); }
+
+  @media (max-width: 860px) {
+    .case-grid { grid-template-columns: 1fr; }
+    .plans { grid-template-columns: 1fr; }
+  }
+</style>

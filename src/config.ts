@@ -84,12 +84,12 @@ export const allies = [
 ];
 
 export const nav = [
-  { label: 'Servicios', href: '#servicios' },
-  { label: 'Proyectos', href: '#proyectos' },
-  { label: 'Proceso', href: '#proceso' },
-  { label: 'Nosotros', href: '#nosotros' },
-  { label: 'Preguntas', href: '#faq' },
+  { label: 'Proyectos', href: '/proyectos' },
+  { label: 'Perfil', href: '/perfil' },
+  { label: 'Contacto', href: '/contacto' },
 ];
+
+export const typologies = ['Todos', 'Comercial', 'Interior', 'Remodelación'];
 
 export const services = [
   {
@@ -152,7 +152,9 @@ export const process = [
  * muestra como marcador de posición. */
 export const projects = [
   {
+    slug: 'proyecto-42',
     title: 'Proyecto 42',
+    typology: 'Interior',
     meta: 'Rediseño integral · aliados: mobiliario, mármol, iluminación',
     summary:
       'Empezó como un cambio puntual y terminó en rediseño completo: acabados, mobiliario a medida e iluminación trabajados con aliados de obra.',
@@ -160,7 +162,9 @@ export const projects = [
     featured: true,
   },
   {
+    slug: 'boca-cafe',
     title: 'Boca Café',
+    typology: 'Comercial',
     meta: 'Local comercial · reconocido en The South America’s 100 Best Coffee Shops 2026',
     summary:
       'Ejecución de un local de café: producción, barra y atención al público. El proyecto creció hasta quedar entre los 100 mejores cafés de Sudamérica.',
@@ -168,14 +172,18 @@ export const projects = [
     featured: true,
   },
   {
+    slug: 'bano-pieza-diseno',
     title: 'Baño con pieza de diseño propio',
+    typology: 'Interior',
     meta: 'Remodelación · lavamanos de diseño propio',
     summary:
       'Piso en madera de deck y lavamanos diseñado para el espacio: acabado que resiste humedad sin repetir el porcelanato de todas las paredes.',
     tags: ['Baño', 'Diseño de pieza', 'Acabados'],
   },
   {
+    slug: 'encamisado-drywall',
     title: 'Encamisado y drywall',
+    typology: 'Remodelación',
     meta: 'Obra en ejecución · técnicas de acabado',
     summary:
       'Levantamiento de paredes en drywall, encamisado y mastique con lijado fino: la base que decide si el acabado final se ve parejo.',

@@ -22,7 +22,7 @@ const ogImage = new URL(url('og.png'), Astro.site ?? 'https://example.com').href
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="theme-color" content="#000000" />
     <link rel="icon" type="image/png" sizes="64x64" href={url('favicon.png')} />
     <link rel="apple-touch-icon" sizes="180x180" href={url('apple-touch-icon.png')} />
 
@@ -39,7 +39,7 @@ const ogImage = new URL(url('og.png'), Astro.site ?? 'https://example.com').href
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&family=Geist+Mono:wght@400;500&display=swap"
     />
 
     <script
@@ -62,20 +62,52 @@ const ogImage = new URL(url('og.png'), Astro.site ?? 'https://example.com').href
       (function () {
         var root = document.documentElement;
         root.classList.add('js');
-        var nodes = document.querySelectorAll('[data-reveal]');
-        if (!('IntersectionObserver' in window) ||
-            window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* 1) Observador (se registra PRIMERO: si el troceado fallara, el texto igual aparece) */
+        var nodes = document.querySelectorAll('[data-reveal], [data-words]');
+        var io = null;
+        if (!('IntersectionObserver' in window) || reduce) {
           nodes.forEach(function (n) { n.classList.add('is-in'); });
-          return;
+        } else {
+          io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+              if (!e.isIntersecting) return;
+              e.target.classList.add('is-in');
+              io.unobserve(e.target);
+            });
+          }, { rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
+          nodes.forEach(function (n) { io.observe(n); });
         }
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) {
-            if (!e.isIntersecting) return;
-            e.target.classList.add('is-in');
-            io.unobserve(e.target);
-          });
-        }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
-        nodes.forEach(function (n) { io.observe(n); });
+
+        /* 2) Efecto de letras: divide cada [data-words] en palabras (paso por defecto 200ms).
+           La animacion arranca cuando el titulo entra en pantalla (clase is-in). */
+        if (!reduce) {
+          try {
+            document.querySelectorAll('[data-words]').forEach(function (el) {
+              var step = Number(el.getAttribute('data-words')) || 200;
+              var base = Number(el.getAttribute('data-words-base')) || 0;
+              var i = 0;
+              var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+              var textNodes = [];
+              while (walker.nextNode()) textNodes.push(walker.currentNode);
+              textNodes.forEach(function (node) {
+                var frag = document.createDocumentFragment();
+                node.nodeValue.split(/(\s+)/).forEach(function (part) {
+                  if (!part) return;
+                  if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+                  var span = document.createElement('span');
+                  span.className = 'wv';
+                  span.style.animationDelay = (base + i * step) + 'ms';
+                  span.textContent = part;
+                  frag.appendChild(span);
+                  i++;
+                });
+                node.parentNode.replaceChild(frag, node);
+              });
+            });
+          } catch (err) { /* nunca dejar texto oculto */ }
+        }
       })();
     </script>
   </body>
