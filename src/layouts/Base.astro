@@ -62,9 +62,41 @@ const ogImage = new URL(url('og.png'), Astro.site ?? 'https://example.com').href
       (function () {
         var root = document.documentElement;
         root.classList.add('js');
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
+
+        /* Efecto de letras: divide cada [data-words] en palabras y las anima
+           una a una (640ms, paso 70ms), igual que velacharts.dev. */
+        if (!reduce) {
+          document.querySelectorAll('[data-words]').forEach(function (el) {
+            var step = Number(el.getAttribute('data-words')) || 70;
+            var i = 0;
+            var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+            var nodes = [];
+            while (walker.nextNode()) nodes.push(walker.currentNode);
+            nodes.forEach(function (node) {
+              var parts = node.nodeValue.split(/(\s+)/);
+              var frag = document.createDocumentFragment();
+              parts.forEach(function (part) {
+                if (!part) return;
+                if (/^\s+$/.test(part)) {
+                  frag.appendChild(document.createTextNode(' '));
+                  return;
+                }
+                var span = document.createElement('span');
+                span.className = 'wv';
+                span.style.animationDelay = (i * step) + 'ms';
+                span.textContent = part;
+                frag.appendChild(span);
+                i++;
+              });
+              node.parentNode.replaceChild(frag, node);
+            });
+          });
+        }
+
         var nodes = document.querySelectorAll('[data-reveal]');
-        if (!('IntersectionObserver' in window) ||
-            window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        if (!('IntersectionObserver' in window) || reduce) {
           nodes.forEach(function (n) { n.classList.add('is-in'); });
           return;
         }

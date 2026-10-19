@@ -746,10 +746,29 @@
 
   [data-reveal].is-in { opacity: 1; transform: none; }
 
+  /* Efecto de letras (palabra a palabra: desenfoque + subida), igual que velacharts.dev */
+  .wv {
+    display: inline-block;
+    white-space: pre;
+    will-change: filter, transform;
+    animation: gl-word 640ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes gl-word {
+    from { opacity: 0; filter: blur(14px); transform: translateY(8px); }
+    to { opacity: 1; filter: blur(0); transform: translateY(0); }
+  }
+
+  @keyframes gl-rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after {
       animation-duration: 0.001ms !important;
+      animation-delay: 0ms !important;
       transition-duration: 0.001ms !important;
     }
     [data-reveal] { opacity: 1; transform: none; }

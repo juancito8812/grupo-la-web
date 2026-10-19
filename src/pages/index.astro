@@ -19,7 +19,7 @@ const featured = projects.filter((p) => p.featured).slice(0, 4);
         <div class="hero__copy">
           <p class="eyebrow">Arquitectura · Caracas</p>
 
-          <h1 class="display">Grupo<br />LA</h1>
+          <h1 data-words class="display">Grupo<br />LA</h1>
 
           <p class="hero__sub">
             Diseñamos, calculamos y ejecutamos<br class="hide-sm" /> obras que se sostienen.
@@ -70,7 +70,7 @@ const featured = projects.filter((p) => p.featured).slice(0, 4);
       <div class="container">
         <div class="section-head">
           <p class="eyebrow">Servicios</p>
-          <h2 class="h2">Todo lo que una obra necesita, bajo un mismo techo</h2>
+          <h2 data-words class="h2">Todo lo que una obra necesita, bajo un mismo techo</h2>
           <p class="lead">
             Del primer plano al último remate. Si el proyecto ya existe, lo ejecutamos;
             si no existe, lo desarrollamos.
@@ -98,7 +98,7 @@ const featured = projects.filter((p) => p.featured).slice(0, 4);
         <div class="section-head section-head--row">
           <div>
             <p class="eyebrow">Proyectos</p>
-            <h2 class="h2">Trabajo reciente</h2>
+            <h2 data-words class="h2">Trabajo reciente</h2>
           </div>
           <a class="btn btn--ghost" href={url('/proyectos')}>
             Ver todos <Icon name="arrow" size={16} />
@@ -127,7 +127,7 @@ const featured = projects.filter((p) => p.featured).slice(0, 4);
       <div class="container">
         <div class="section-head">
           <p class="eyebrow">Proceso</p>
-          <h2 class="h2">Cuatro pasos, sin sorpresas</h2>
+          <h2 data-words class="h2">Cuatro pasos, sin sorpresas</h2>
         </div>
 
         <ol class="process">
@@ -147,7 +147,7 @@ const featured = projects.filter((p) => p.featured).slice(0, 4);
       <div class="container split">
         <div>
           <p class="eyebrow">Perfil</p>
-          <h2 class="h2" style="margin-top:16px">Detrás de Grupo LA está la Arq. Luz Aché</h2>
+          <h2 data-words class="h2" style="margin-top:16px">Detrás de Grupo LA está la Arq. Luz Aché</h2>
           <p class="lead" style="margin-top:24px">{about.paragraphs[0]}</p>
           <ul class="checklist" style="margin-top:28px">
             {about.bullets.map((b) => (
@@ -174,7 +174,7 @@ const featured = projects.filter((p) => p.featured).slice(0, 4);
       <div class="container split">
         <div>
           <p class="eyebrow">Aliados</p>
-          <h2 class="h2" style="margin-top:16px">La obra se hace en equipo</h2>
+          <h2 data-words class="h2" style="margin-top:16px">La obra se hace en equipo</h2>
           <p class="lead" style="margin-top:20px">
             Mobiliario a medida, mármol, iluminación, climatización y herrería: talleres
             con los que resolvemos cada detalle.
@@ -202,7 +202,7 @@ const featured = projects.filter((p) => p.featured).slice(0, 4);
       <div class="container split">
         <div>
           <p class="eyebrow">Preguntas</p>
-          <h2 class="h2" style="margin-top:16px">Lo que siempre nos preguntan</h2>
+          <h2 data-words class="h2" style="margin-top:16px">Lo que siempre nos preguntan</h2>
           <p class="lead" style="margin-top:20px">
             ¿Quedó algo fuera? Escríbenos y lo respondemos sin compromiso.
           </p>
@@ -227,7 +227,7 @@ const featured = projects.filter((p) => p.featured).slice(0, 4);
         <div class="cta">
           <div class="cta__inner">
             <p class="eyebrow">Siguiente paso</p>
-            <h2 class="h2" style="margin-top:18px">Hablemos de tu obra</h2>
+            <h2 data-words class="h2" style="margin-top:18px">Hablemos de tu obra</h2>
             <p class="lead" style="margin-top:18px">
               Cuéntanos qué espacio quieres intervenir. Coordinamos una visita de
               levantamiento y entregamos presupuesto por partidas, por escrito.

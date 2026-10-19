@@ -23,7 +23,7 @@ const { project } = Astro.props;
           <Icon name="arrow" size={14} /> Proyectos
         </a>
         <p class="eyebrow" style="margin-top:22px">{project.typology}</p>
-        <h1 class="h1" style="margin-top:16px">{project.title}</h1>
+        <h1 data-words class="h1" style="margin-top:16px">{project.title}</h1>
         <p class="lead" style="margin-top:18px">{project.meta}</p>
       </div>
     </section>
@@ -41,7 +41,7 @@ const { project } = Astro.props;
         <div class="case-grid">
           <div class="case-body">
             <p class="eyebrow">Memoria</p>
-            <h2 class="h3" style="margin-top:14px">Alcance del proyecto</h2>
+            <h2 data-words class="h3" style="margin-top:14px">Alcance del proyecto</h2>
             <p class="lead" style="margin-top:14px">{project.summary}</p>
 
             <div class="tags" style="margin-top:28px">
@@ -65,7 +65,7 @@ const { project } = Astro.props;
 
         <div class="plans-wrap">
           <p class="eyebrow">Planos</p>
-          <h2 class="h3" style="margin:14px 0 20px">Documentación técnica</h2>
+          <h2 data-words class="h3" style="margin:14px 0 20px">Documentación técnica</h2>
           <div class="plans">
             <MediaPlaceholder label="Planta" sublabel="Pendiente" variant="light" />
             <MediaPlaceholder label="Axonométrico" sublabel="Pendiente" variant="light" />
