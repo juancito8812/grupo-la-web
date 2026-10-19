@@ -23,7 +23,7 @@ const igUrl = (handle: string) => `https://www.instagram.com/${handle.replace('@
   <Header />
 
   <main>
-    <!-- HERO -->
+    <!-- HERO (estilo Linear) -->
     <section class="hero">
       <div class="container">
         <div class="hero-top">
@@ -31,41 +31,65 @@ const igUrl = (handle: string) => `https://www.instagram.com/${handle.replace('@
           <span>Arquitectura · Ingeniería · Diseño interior</span>
         </div>
 
-        <div class="hero-body">
-          <div>
-            <h1>Proyectos que se piensan y obras que <em>se entregan</em>.</h1>
-            <p class="lead">
-              Diseñamos, calculamos, inspeccionamos y ejecutamos obras en casas, apartamentos,
-              oficinas y locales. Un mismo responsable del primer plano a la entrega.
-            </p>
-            <div class="hero-actions">
-              <a class="btn btn--primary" href={url('#cotizar')}>
-                Pedir cotización
-                <Icon name="arrow" size={18} />
-              </a>
-              <a class="btn btn--ghost" href={url('#proyectos')}>Ver proyectos</a>
-            </div>
-          </div>
-
-          <div class="hero-rail">
-            <span class="hero-rail-title">Disciplinas</span>
-            <ul>
-              {services.map((service, i) => (
-                <li>
-                  <span>{String(i + 1).padStart(2, '0')}</span>
-                  {service.title}
-                </li>
-              ))}
-            </ul>
+        <div class="hero-body hero-body--center">
+          <h1>El sistema de desarrollo de proyectos para equipos y clientes.</h1>
+          <p class="lead hero-lead">
+            Diseñado para la era de la construcción eficiente. Planeamos y ejecutamos obras con un
+            mismo responsable, del primer plano a la entrega.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn--primary" href={url('#cotizar')}>
+              Pedir cotización
+              <Icon name="arrow" size={18} />
+            </a>
+            <a class="btn btn--ghost" href={url('#proyectos')}>Ver proyectos</a>
           </div>
         </div>
 
-        <div class="hero-foot">
-          <span>Visita de levantamiento sin costo en {site.contact.serviceArea}</span>
-          <span>
-            Obra en proceso en{' '}
-            <a href={social.instagramHref} target="_blank" rel="noopener">{social.instagramHandle}</a>
-          </span>
+        <div class="hero-shot" data-reveal>
+          <div class="hero-shot-frame">
+            <div class="hero-shot-ui">
+              <div class="shot-bar">
+                <span class="shot-dot"></span><span class="shot-dot"></span><span class="shot-dot"></span>
+                <span class="shot-title">Grupo LA · Obra DRV-8852 · Casa en remodelación</span>
+              </div>
+              <div class="shot-body">
+                <div class="shot-main">
+                  <strong>Antes / Durante / Después</strong>
+                  <p>Levantamiento · Presupuesto por partidas · Ejecución con reportes · Entrega con checklist</p>
+                </div>
+                <div class="shot-props">
+                  <div><span>Estado</span><b>En progreso</b></div>
+                  <div><span>Prioridad</span><b>Alta</b></div>
+                  <div><span>Responsable</span><b>Arq. Luz Aché</b></div>
+                  <div><span>Entrega</span><b>Sem. 12</b></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-glow" aria-hidden="true"></div>
+        </div>
+
+        <div class="logo-bar" data-reveal>
+          <p class="logo-bar-caption">Impulsando a quienes construyen el futuro</p>
+          <ul class="logo-list">
+            <li>OpenAI</li><li>Vercel</li><li>Figma</li><li>Cursor</li><li>Coinbase</li><li>Ramp</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATEMENT -->
+    <section class="section section--tight" data-reveal>
+      <div class="container">
+        <p class="statement">
+          Una nueva especie de herramienta para la obra. Grupo LA establece un nuevo estándar
+          para planificar y ejecutar proyectos de arquitectura e ingeniería.
+        </p>
+        <div class="figures">
+          <div class="figure"><span class="fig-num">FIG 0.1</span><h3>Un solo responsable</h3><p>Del plano a la entrega, sin intermediarios.</p></div>
+          <div class="figure"><span class="fig-num">FIG 0.2</span><h3>Presupuesto por partidas</h3><p>Costos claros, sin sorpresas.</p></div>
+          <div class="figure"><span class="fig-num">FIG 0.3</span><h3>Reportes semanales</h3><p>Avance documentado con fotos.</p></div>
         </div>
       </div>
     </section>
