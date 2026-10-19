@@ -23,17 +23,14 @@ const igUrl = (handle: string) => `https://www.instagram.com/${handle.replace('@
   <Header />
 
   <main>
-    <!-- HERO -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-top">
-          <span>Grupo LA — Caracas, Venezuela</span>
-          <span>Arquitectura · Ingeniería · Diseño interior</span>
-        </div>
-
-        <div class="hero-body">
-          <div>
-            <h1>Proyectos que se piensan y obras que <em>se entregan</em>.</h1>
+    <!-- HERO (estilo Norm Architects: foto grande + texto superpuesto) -->
+    <section class="hero hero--photo">
+      <div class="hero-media">
+        <div class="media-ph media-ph--dark hero-media-ph" aria-hidden="true"></div>
+        <div class="hero-overlay">
+          <div class="container">
+            <p class="eyebrow">Grupo LA — Caracas, Venezuela</p>
+            <h1>Proyectos que se piensan<br />y obras que <em>se entregan</em>.</h1>
             <p class="lead">
               Diseñamos, calculamos, inspeccionamos y ejecutamos obras en casas, apartamentos,
               oficinas y locales. Un mismo responsable del primer plano a la entrega.
@@ -46,20 +43,11 @@ const igUrl = (handle: string) => `https://www.instagram.com/${handle.replace('@
               <a class="btn btn--ghost" href={url('#proyectos')}>Ver proyectos</a>
             </div>
           </div>
-
-          <div class="hero-rail">
-            <span class="hero-rail-title">Disciplinas</span>
-            <ul>
-              {services.map((service, i) => (
-                <li>
-                  <span>{String(i + 1).padStart(2, '0')}</span>
-                  {service.title}
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
+        <span class="hero-arrow" aria-hidden="true">‹</span>
+      </div>
 
+      <div class="container">
         <div class="hero-foot">
           <span>Visita de levantamiento sin costo en {site.contact.serviceArea}</span>
           <span>
@@ -101,11 +89,11 @@ const igUrl = (handle: string) => `https://www.instagram.com/${handle.replace('@
       <div class="container">
         <div class="section-head section-head--split">
           <div>
-            <h2>Antes y después,<br />sin adornos</h2>
+            <h2>Nuestros proyectos</h2>
           </div>
           <p class="lead">
-            Cada obra se documenta con fotos de antes, durante y después. Los proyectos son reales;
-            las fotos antes/después están pendientes de entrega por el cliente.
+            Cada obra se documenta con fotos de antes y después. Los proyectos son reales;
+            las fotos están pendientes de entrega por el cliente.
           </p>
         </div>
 

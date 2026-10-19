@@ -396,6 +396,80 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 }
 .hero-foot a:hover { border-color: #fff; }
 
+/* ---------- Hero estilo Norm: foto grande + texto superpuesto ---------- */
+.hero--photo { padding: 0; background: var(--ink); }
+.hero-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  min-height: 360px;
+  overflow: hidden;
+}
+.hero-media-ph {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: #141414;
+  align-items: start;
+  justify-items: start;
+  padding: 16px 20px;
+  gap: 2px;
+}
+.hero-media-ph b { font-size: 0.62rem; opacity: 0.5; margin-bottom: 0; }
+.hero-media-ph span { font-size: 0.62rem; opacity: 0.4; }
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  z-index: 2;
+  padding: clamp(32px, 5vw, 64px) 0;
+  background: linear-gradient(180deg, rgba(10,10,10,0) 30%, rgba(10,10,10,0.72) 100%);
+  color: #fff;
+}
+.hero-overlay .container { width: 100%; }
+.hero-overlay .eyebrow { color: var(--muted-dark); margin-bottom: var(--s-3); }
+.hero-overlay h1 { color: #fff; max-width: 16ch; margin-bottom: var(--s-4); }
+.hero-overlay .lead { color: rgba(255,255,255,0.78); max-width: 46ch; }
+.hero-overlay .hero-actions { margin-top: var(--s-5); }
+.hero-arrow {
+  position: absolute;
+  left: clamp(12px, 3vw, 28px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  color: rgba(255,255,255,0.7);
+  font-family: var(--font-head);
+  font-size: 2.4rem;
+  line-height: 1;
+  pointer-events: none;
+}
+.hero-media::after {
+  content: 'Foto pendiente · formato 21:9';
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  z-index: 2;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  pointer-events: none;
+}
+.media-ph--dark {
+  border-color: var(--line-dark-soft);
+  background-color: #141414;
+  background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  color: var(--muted-dark);
+}
+@media (max-width: 960px) {
+  .hero-media { aspect-ratio: 16 / 9; min-height: 280px; }
+  .hero-overlay h1 { max-width: 100%; }
+}
+
 /* ---------- Placeholder de imagen ---------- */
 .media-ph {
   position: relative;
@@ -511,33 +585,24 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 .project {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
   background: var(--paper);
-  overflow: hidden;
-  transition: border-color 0.3s ease;
+  transition: opacity 0.3s ease;
 }
-.project:hover { border-color: rgba(10, 10, 10, 0.42); }
-.project--wide {
-  grid-column: 1 / -1;
-  flex-direction: row;
-}
+.project:hover { opacity: 0.88; }
+.project--wide { grid-column: 1 / -1; }
 .project-media {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--line-soft);
-  border-bottom: 1px solid var(--line-soft);
+  gap: 2px;
+  background: var(--paper);
 }
 .project--wide .project-media {
-  flex: 0 0 48%;
+  flex: none;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr;
-  border-bottom: 0;
-  border-right: 1px solid var(--line-soft);
 }
 .project-media .media-ph {
-  min-height: 176px;
+  min-height: 260px;
   border: 0;
   border-radius: 0;
   font-size: 0.68rem;
@@ -547,7 +612,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
   flex: 1;
   flex-direction: column;
   gap: var(--s-2);
-  padding: clamp(22px, 2.6vw, 32px);
+  padding: var(--s-5) 0 var(--s-2);
 }
 .project-body h3 {
   margin: 0;
@@ -564,14 +629,13 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
   color: var(--muted);
 }
 .project-body p { margin: 0; font-size: 0.94rem; color: var(--muted); }
-.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: var(--s-4); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--s-3); }
 .tag {
-  padding: 4px 9px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  padding: 2px 0;
   font-size: 0.7rem;
   letter-spacing: 0.04em;
   color: var(--muted);
+  border-bottom: 1px solid var(--line);
 }
 
 /* ---------- Nosotros ---------- */
