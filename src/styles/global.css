@@ -746,16 +746,23 @@
 
   [data-reveal].is-in { opacity: 1; transform: none; }
 
-  /* Efecto de letras (palabra a palabra: desenfoque + subida), igual que velacharts.dev */
+  /* Efecto de letras (palabra a palabra: desenfoque + subida), igual que velacharts.dev.
+     Empieza oculto y arranca cuando el título entra en pantalla (si no, no se nota). */
   .wv {
     display: inline-block;
     white-space: pre;
-    will-change: filter, transform;
-    animation: gl-word 640ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    opacity: 0;
+    filter: blur(16px);
+    transform: translateY(14px);
+    will-change: filter, transform, opacity;
+  }
+
+  [data-words].is-in .wv {
+    animation: gl-word 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   @keyframes gl-word {
-    from { opacity: 0; filter: blur(14px); transform: translateY(8px); }
+    from { opacity: 0; filter: blur(16px); transform: translateY(14px); }
     to { opacity: 1; filter: blur(0); transform: translateY(0); }
   }
 

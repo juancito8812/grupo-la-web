@@ -63,51 +63,51 @@ const ogImage = new URL(url('og.png'), Astro.site ?? 'https://example.com').href
         var root = document.documentElement;
         root.classList.add('js');
         var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        var ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
 
-        /* Efecto de letras: divide cada [data-words] en palabras y las anima
-           una a una (640ms, paso 70ms), igual que velacharts.dev. */
-        if (!reduce) {
-          document.querySelectorAll('[data-words]').forEach(function (el) {
-            var step = Number(el.getAttribute('data-words')) || 70;
-            var i = 0;
-            var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
-            var nodes = [];
-            while (walker.nextNode()) nodes.push(walker.currentNode);
-            nodes.forEach(function (node) {
-              var parts = node.nodeValue.split(/(\s+)/);
-              var frag = document.createDocumentFragment();
-              parts.forEach(function (part) {
-                if (!part) return;
-                if (/^\s+$/.test(part)) {
-                  frag.appendChild(document.createTextNode(' '));
-                  return;
-                }
-                var span = document.createElement('span');
-                span.className = 'wv';
-                span.style.animationDelay = (i * step) + 'ms';
-                span.textContent = part;
-                frag.appendChild(span);
-                i++;
-              });
-              node.parentNode.replaceChild(frag, node);
-            });
-          });
-        }
-
-        var nodes = document.querySelectorAll('[data-reveal]');
+        /* 1) Observador (se registra PRIMERO: si el troceado fallara, el texto igual aparece) */
+        var nodes = document.querySelectorAll('[data-reveal], [data-words]');
+        var io = null;
         if (!('IntersectionObserver' in window) || reduce) {
           nodes.forEach(function (n) { n.classList.add('is-in'); });
-          return;
+        } else {
+          io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+              if (!e.isIntersecting) return;
+              e.target.classList.add('is-in');
+              io.unobserve(e.target);
+            });
+          }, { rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
+          nodes.forEach(function (n) { io.observe(n); });
         }
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) {
-            if (!e.isIntersecting) return;
-            e.target.classList.add('is-in');
-            io.unobserve(e.target);
-          });
-        }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
-        nodes.forEach(function (n) { io.observe(n); });
+
+        /* 2) Efecto de letras: divide cada [data-words] en palabras (paso 90ms).
+           La animacion arranca cuando el titulo entra en pantalla (clase is-in). */
+        if (!reduce) {
+          try {
+            document.querySelectorAll('[data-words]').forEach(function (el) {
+              var step = Number(el.getAttribute('data-words')) || 90;
+              var base = Number(el.getAttribute('data-words-base')) || 0;
+              var i = 0;
+              var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+              var textNodes = [];
+              while (walker.nextNode()) textNodes.push(walker.currentNode);
+              textNodes.forEach(function (node) {
+                var frag = document.createDocumentFragment();
+                node.nodeValue.split(/(\s+)/).forEach(function (part) {
+                  if (!part) return;
+                  if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+                  var span = document.createElement('span');
+                  span.className = 'wv';
+                  span.style.animationDelay = (base + i * step) + 'ms';
+                  span.textContent = part;
+                  frag.appendChild(span);
+                  i++;
+                });
+                node.parentNode.replaceChild(frag, node);
+              });
+            });
+          } catch (err) { /* nunca dejar texto oculto */ }
+        }
       })();
     </script>
   </body>
