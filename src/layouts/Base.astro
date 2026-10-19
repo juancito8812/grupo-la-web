@@ -80,12 +80,12 @@ const ogImage = new URL(url('og.png'), Astro.site ?? 'https://example.com').href
           nodes.forEach(function (n) { io.observe(n); });
         }
 
-        /* 2) Efecto de letras: divide cada [data-words] en palabras (paso 90ms).
+        /* 2) Efecto de letras: divide cada [data-words] en palabras (paso por defecto 200ms).
            La animacion arranca cuando el titulo entra en pantalla (clase is-in). */
         if (!reduce) {
           try {
             document.querySelectorAll('[data-words]').forEach(function (el) {
-              var step = Number(el.getAttribute('data-words')) || 90;
+              var step = Number(el.getAttribute('data-words')) || 200;
               var base = Number(el.getAttribute('data-words-base')) || 0;
               var i = 0;
               var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
